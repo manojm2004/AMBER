@@ -1,0 +1,16 @@
+services:
+  # AMBER Backend API (FastAPI + TensorFlow)
+  - type: web
+    name: amber-backend
+    env: docker
+    plan: free
+    region: ohio
+    branch: main
+    dockerContext: .
+    dockerfilePath: Dockerfile
+
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.10.12"
+      - key: JWT_SECRET_KEY
+        generateValue: true

@@ -1,0 +1,42 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-amber-bg text-amber-white font-sans antialiased;
+  }
+}
+
+@layer components {
+  /* Common app card styled to look sci-fi / futuristic */
+  .sci-card {
+    @apply bg-amber-surface border border-amber-border rounded-xl p-5 mb-4 shadow-lg;
+  }
+  .sci-title {
+    @apply font-mono text-amber-cyandim text-sm tracking-widest uppercase mb-4 pb-2 border-b border-amber-border;
+  }
+  
+  /* Inputs */
+  .sci-input {
+    @apply w-full bg-amber-surface2 border border-amber-border rounded-lg p-3 text-amber-white font-mono focus:border-amber-cyan focus:ring-1 focus:ring-amber-cyan transition-colors outline-none;
+  }
+  
+  /* Buttons */
+  .sci-btn {
+    @apply bg-transparent border border-amber-cyandim text-amber-cyan font-mono text-sm tracking-wider rounded-lg px-5 py-2 hover:bg-amber-cyan/10 hover:border-amber-cyan transition-all duration-200 outline-none;
+  }
+  .sci-btn-primary {
+    @apply bg-amber-cyan/10 border border-amber-cyan text-amber-cyan font-mono text-sm tracking-wider rounded-lg px-5 py-2 hover:bg-amber-cyan hover:text-amber-bg transition-all duration-200 outline-none;
+  }
+
+  /* Prediction Badges */
+  .pred-badge {
+    @apply inline-flex items-center gap-2 px-5 py-2 rounded-lg font-mono font-bold tracking-widest text-sm shadow-md;
+  }
+  .pred-pure { @apply bg-amber-green text-black; }
+  .pred-adulterated { @apply text-white; background: #ff4d4d; }
+  .pred-pathogens { @apply text-white; background: #b06ef3; }
+  .pred-glucose { @apply bg-amber-white text-black; }
+  .pred-default { @apply bg-gray-600 text-white; }
+}

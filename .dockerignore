@@ -1,0 +1,18 @@
+# Ignore heavy development folders
+venv/
+node_modules/
+.git/
+.env
+
+# Ignore previous database builds explicitly if deploying fresh
+data/
+*.db
+*.sqlite3
+
+# Ignore temporary python cache files
+__pycache__/
+*.pyc
+*.pyo
+
+# Ignore local models if they should be downloaded dynamically (Optional, leaving commented if they are required in image)
+# models/

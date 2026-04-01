@@ -1,0 +1,301 @@
+import { useState, useEffect, useRef } from 'react';
+import { uploadImage, getHistory } from '../api';
+import { Camera, Activity, Aperture, AlertTriangle, Settings } from 'lucide-react';
+
+export default function LiveCapture() {
+  const [liveHistory, setLiveHistory] = useState([]);
+  const [latestScan, setLatestScan] = useState(null);
+  const [cameraError, setCameraError] = useState(null);
+  const [isScanning, setIsScanning] = useState(false);
+  
+  // Camera Selection State
+  const [cameras, setCameras] = useState([]);
+  const [selectedDeviceId, setSelectedDeviceId] = useState("");
+  
+  const videoRef = useRef(null);
+  const canvasRef = useRef(null);
+  const streamRef = useRef(null);
+
+  // Fetch media devices
+  const loadDevices = async () => {
+    try {
+      // Request base permission first to get hardware labels
+      await navigator.mediaDevices.getUserMedia({ video: true });
+      const devices = await navigator.mediaDevices.enumerateDevices();
+      const videoInputs = devices.filter(device => device.kind === 'videoinput');
+      
+      setCameras(videoInputs);
+      
+      // Look strictly for a guaranteed microscope or USB device
+      let explicitMicroscope = videoInputs.find(d => 
+        d.label.toLowerCase().includes('microscope') || 
+        d.label.toLowerCase().includes('usb') ||
+        d.label.toLowerCase().includes('external')
+      );
+      
+      if (explicitMicroscope) {
+        setSelectedDeviceId(explicitMicroscope.deviceId);
+        startCamera(explicitMicroscope.deviceId);
+      } else {
+        // DO NOT auto-start the laptop camera. 
+        setCameraError("MICROSCOPE NOT CONFIRMED: Please select your digital microscope from the dropdown above.");
+        setSelectedDeviceId(""); // Clear selection so it doesn't auto-boot the wrong one
+        if (videoRef.current) {
+           videoRef.current.srcObject = null;
+        }
+      }
+    } catch (err) {
+      setCameraError("Unable to access recording devices or permissions denied.");
+    }
+  };
+
+  // Initialize history and available cameras
+  useEffect(() => {
+    getHistory().then(res => {
+      const hist = res.data.slice(0, 10);
+      setLiveHistory(hist);
+      if (hist.length > 0) setLatestScan(hist[0]);
+    }).catch(err => console.error("Initial load failed", err));
+    
+    loadDevices();
+
+    // Cleanup camera feed on dismount
+    return () => {
+      if (streamRef.current) {
+        streamRef.current.getTracks().forEach(track => track.stop());
+      }
+    };
+  }, []);
+
+  // When dropdown changes, restart camera
+  useEffect(() => {
+    if (selectedDeviceId) {
+      startCamera(selectedDeviceId);
+    }
+  }, [selectedDeviceId]);
+
+  // Listen for physical Microscope Snap Button (simulated as keypresses)
+  useEffect(() => {
+    const handleSnap = (e) => {
+      if (document.activeElement && (document.activeElement.tagName === "INPUT" || document.activeElement.tagName === "TEXTAREA")) return;
+      
+      // USB Microscopes often simulate Enter, Space, or special Camera media keys
+      if (e.code === 'Space' || e.code === 'Enter' || e.key === 'Camera' || e.key === 'MediaPlayPause') {
+        e.preventDefault();
+        const btn = document.getElementById('hardware-snap-btn');
+        if (btn && !btn.disabled) btn.click();
+      }
+    };
+    window.addEventListener('keydown', handleSnap);
+    return () => window.removeEventListener('keydown', handleSnap);
+  }, []);
+
+  const startCamera = async (deviceId) => {
+    try {
+      // Stop old stream if running
+      if (streamRef.current) {
+        streamRef.current.getTracks().forEach(track => track.stop());
+      }
+      
+      const constraints = { 
+        video: { 
+          deviceId: deviceId ? { exact: deviceId } : undefined,
+          width: { ideal: 1920 }, 
+          height: { ideal: 1080 }
+        } 
+      };
+      
+      const stream = await navigator.mediaDevices.getUserMedia(constraints);
+      streamRef.current = stream;
+      if (videoRef.current) {
+        videoRef.current.srcObject = stream;
+      }
+      setCameraError(null);
+    } catch (err) {
+      console.error("Camera access denied or missing", err);
+      setCameraError("Unable to access the selected Microscope Camera.");
+    }
+  };
+
+  const handleCapture = async () => {
+    if (!videoRef.current || !canvasRef.current) return;
+    
+    setIsScanning(true);
+    
+    const video = videoRef.current;
+    const canvas = canvasRef.current;
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
+    const context = canvas.getContext('2d');
+    context.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+    canvas.toBlob(async (blob) => {
+      if (!blob) {
+        setIsScanning(false);
+        return;
+      }
+
+      const file = new File([blob], `microscope_capture_${new Date().getTime()}.jpg`, { type: 'image/jpeg' });
+      
+      try {
+        const res = await uploadImage(file);
+        const newRecord = res.data;
+        
+        setLiveHistory(prev => [newRecord, ...prev].slice(0, 10));
+        setLatestScan(newRecord);
+      } catch (err) {
+        console.error("Prediction failed:", err);
+      } finally {
+        setIsScanning(false);
+      }
+    }, 'image/jpeg', 0.95);
+  };
+
+  const badgeClass = (label) => {
+    switch(label) {
+      case 'Pure': return 'bg-amber-green text-black';
+      case 'Adulterated': return 'bg-red-500 text-white';
+      case 'Glucose': return 'bg-gray-400 text-black';
+      case 'Pathogens': return 'bg-amber-purple text-white';
+      default: return 'bg-gray-600 text-white';
+    }
+  };
+
+  const formatDate = (dateStr) => {
+    return new Date(dateStr).toLocaleString();
+  };
+
+  return (
+    <div className="flex flex-col md:flex-row gap-6">
+      {/* LEFT COLUMN: Hardware Camera Feed */}
+      <div className="flex-1">
+        <div className="sci-card min-h-[400px]">
+          <div className="flex justify-between items-center mb-6 pb-2 border-b border-amber-border">
+            <h2 className="font-mono text-amber-cyan text-sm tracking-widest uppercase flex items-center gap-2">
+              <Camera size={18}/> DIGITAL MICROSCOPE FEED
+            </h2>
+            <div className="flex items-center gap-4">
+               {/* Hardware Selection Dropdown */}
+               {cameras.length > 0 && (
+                 <div className="flex items-center gap-2">
+                   <Settings size={14} className="text-amber-muted" />
+                   <select 
+                     className="bg-amber-surface2 border border-amber-border text-amber-white text-xs font-mono rounded px-2 py-1 outline-none focus:border-amber-cyan"
+                     value={selectedDeviceId}
+                     onChange={(e) => setSelectedDeviceId(e.target.value)}
+                   >
+                     {cameras.map((cam, idx) => (
+                       <option key={cam.deviceId} value={cam.deviceId}>
+                         {cam.label || `USB Camera ${idx + 1}`}
+                       </option>
+                     ))}
+                   </select>
+                 </div>
+               )}
+               <div className="flex items-center gap-2 text-xs font-mono text-amber-muted border-l border-amber-border pl-4">
+                 <div className={`w-2 h-2 rounded-full ${cameraError ? 'bg-red-500' : 'bg-amber-green animate-pulse shadow-[0_0_8px_#00e676]'}`}></div> 
+                 {cameraError ? 'HARDWARE ERROR' : 'STREAMING LIVE'}
+               </div>
+            </div>
+          </div>
+          
+          <div className="flex flex-col items-center">
+            
+            {/* The Actual Video Feed */}
+            <div className="w-full relative bg-black border border-amber-border rounded-lg overflow-hidden flex items-center justify-center mb-6 aspect-video">
+               <div className="absolute inset-0 bg-amber-cyan/5 border-2 border-amber-cyan/20 m-2 rounded pointer-events-none z-10"></div>
+               
+               {/* Targeting Crosshairs UI element overlay */}
+               <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-20">
+                 <div className="w-8 h-8 md:w-16 md:h-16 border border-amber-cyan/50 rounded-full"></div>
+                 <div className="w-1 h-2 md:h-4 bg-amber-cyan/50 absolute top-1/2 -mt-1 md:-mt-2 left-1/4"></div>
+                 <div className="w-1 h-2 md:h-4 bg-amber-cyan/50 absolute top-1/2 -mt-1 md:-mt-2 right-1/4"></div>
+                 <div className="w-2 md:w-4 h-1 bg-amber-cyan/50 absolute top-1/4 left-1/2 -ml-1 md:-ml-2"></div>
+                 <div className="w-2 md:w-4 h-1 bg-amber-cyan/50 absolute bottom-1/4 left-1/2 -ml-1 md:-ml-2"></div>
+               </div>
+
+               {cameraError ? (
+                 <div className="flex flex-col items-center text-red-500 font-mono text-sm max-w-sm text-center p-6 bg-red-500/10 rounded z-30">
+                   <AlertTriangle className="mb-2" size={32} />
+                   <span>{cameraError}</span>
+                   <button onClick={() => loadDevices()} className="mt-4 px-4 py-2 border border-red-500 rounded hover:bg-red-500 hover:text-white transition-colors">
+                     RESCAN HARDWARE PORTS
+                   </button>
+                 </div>
+               ) : (
+                 <video 
+                   ref={videoRef} 
+                   autoPlay 
+                   playsInline 
+                   muted 
+                   className={`w-full h-full object-cover transition-opacity duration-300 ${isScanning ? 'opacity-50 blur-sm' : 'opacity-100'}`} 
+                 />
+               )}
+            </div>
+            
+            {/* Hidden Canvas used for snapping the picture accurately */}
+            <canvas ref={canvasRef} className="hidden" />
+            
+            {/* Capture Action Bar */}
+            <div className="w-full flex items-center gap-4">
+              <button 
+                 id="hardware-snap-btn"
+                 onClick={handleCapture}
+                 disabled={!!cameraError || isScanning}
+                 className="flex-1 sci-btn-primary py-4 text-base flex justify-center items-center gap-3 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-transparent disabled:hover:text-amber-cyan"
+              >
+                 <Aperture className={isScanning ? "animate-spin" : ""} size={20}/> 
+                 {isScanning ? 'PROCESSING TENSORFLOW...' : 'CAPTURE & ANALYZE IMAGE'}
+              </button>
+            </div>
+
+            {/* Below Camera: The latest result breakdown */}
+            {latestScan && (
+              <div className="w-full mt-6 bg-amber-surface2 border border-amber-border rounded p-4 flex items-center justify-between">
+                <div>
+                  <div className="font-mono text-amber-muted text-[10px] tracking-widest mb-1">LAST CAPTURE RESULT</div>
+                  <div className={`px-4 py-1 inline-flex rounded font-mono font-bold tracking-widest text-sm shadow-md ${badgeClass(latestScan.prediction_label)}`}>
+                    {latestScan.prediction_label}
+                  </div>
+                </div>
+                <div className="text-right ml-8 min-w-[150px]">
+                  <div className="font-mono text-amber-muted text-[10px] tracking-widest mb-1">CONFIDENCE</div>
+                  <div className="flex items-center justify-end gap-3">
+                    <span className="font-mono text-amber-cyan text-base">{(latestScan.confidence * 100).toFixed(1)}%</span>
+                  </div>
+                  <div className="w-full h-1.5 bg-black rounded-full overflow-hidden mt-1">
+                    <div className="h-full bg-amber-cyan transition-all duration-500" style={{width: `${latestScan.confidence * 100}%`}}></div>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+
+      {/* RIGHT COLUMN: Timeline */}
+      <div className="w-full md:w-1/3">
+        <div className="sci-card h-full">
+           <h2 className="sci-title flex items-center gap-2"><Activity size={18}/> RECENT TIMELINE</h2>
+           <div className="flex flex-col gap-3 mt-4">
+             {liveHistory.map((rec, index) => (
+                <div key={rec.id || index} className="flex items-center gap-3 p-3 bg-amber-surface2 rounded-lg border border-amber-border/50 hover:border-amber-cyan/30 transition-colors">
+                  <div className={`w-2 h-2 rounded-full ${rec.prediction_label === 'Pure' ? 'bg-amber-green' : 'bg-red-500'}`}></div>
+                  <div className="flex-1 overflow-hidden">
+                     <div className="font-mono text-[10px] text-amber-muted">{formatDate(rec.timestamp)}</div>
+                     <div className="font-mono text-xs text-amber-white truncate">{rec.filename}</div>
+                  </div>
+                  <div className={`font-mono font-bold text-xs ${rec.prediction_label === 'Pure' ? 'text-amber-green' : 'text-red-500'}`}>
+                    {rec.prediction_label}
+                  </div>
+                </div>
+             ))}
+             {liveHistory.length === 0 && (
+                <div className="text-center font-mono text-xs text-amber-muted mt-8">NO RECENT CAPTURES</div>
+             )}
+           </div>
+        </div>
+      </div>
+    </div>
+  );
+}

@@ -1,0 +1,50 @@
+# Data files (large training data - not needed for app)
+data/raw/
+data/processed/
+*.npy
+*.keras
+*.h5
+*.pkl
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+ENV/
+env/
+
+# Node / Frontend
+node_modules/
+frontend/dist/
+frontend/build/
+frontend/.cache/
+build_log.txt
+
+# Database files (runtime data)
+*.db
+*.db-shm
+*.db-wal
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs and temp
+*.log
+logs/
+temp/
+
+# Output plots and eval
+outputs/
+eval_out/
+
+# Notebooks models
+notebooks/models/
