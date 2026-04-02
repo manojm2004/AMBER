@@ -1,180 +1,79 @@
-# 🔬 Milk Quality Analysis System
+# 🔬 AMBER: AI-Powered Milk Quality Analysis System
 
-A deep learning-based web application that performs real-time classification of milk samples using microscopic images to detect adulteration, contamination, and quality issues.
+<p align="center">
+  A high-scale, production-ready SaaS platform that performs real-time classification of milk samples using Convolutional Neural Networks (CNN) to detect adulteration, contamination, and purity levels.
+</p>
 
-## 📊 Project Overview
-
-This system uses Convolutional Neural Networks (CNN) to analyze microscopic images of milk samples and classify them into four categories:
-- ✅ Pure Milk
-- ⚠️ Glucose Adulteration
-- ❌ Adulterated Samples
-- 🦠 Pathogen Contamination
-
-### Key Features
-
-- **Real-time Monitoring**: Continuously watches a capture folder for new microscope images
-- **Dual Input Methods**: 
-  - Upload individual images for quick analysis
-  - Monitor live microscope captures
-- **Advanced Classification**:
-  - CNN-based deep learning model
-  - 86.81% validation accuracy
-  - Real-time preprocessing and prediction
-- **Interactive UI**:
-  - Color-coded prediction badges
-  - Confidence score visualization
-  - Historical data tracking
-  - Export functionality
-
-## 🗂️ Project Structure
-
-```
-PROJECT-MAJOR/
-├── app/
-│   └── app.py                 # Main Streamlit application
-├── data/
-│   └── raw/
-│       └── real/
-│           ├── pure/         # Pure milk samples (2000 images)
-│           ├── glucose/      # Glucose adulterated samples (2000 images)
-│           ├── adulterated/  # Other adulterants samples (2000 images)
-│           ├── pathogens/    # Contaminated samples (2000 images)
-│           └── CAPTURE_FOLDER/ # Live microscope capture directory
-│   └── processed/
-│           ├── X_train.npy/  # Training images
-│           ├── X_test.npy/   # Testing images
-│           ├── y_train.npy/  # Training labels
-│           ├── y_test.npy/   # Testing labels
-├── models/
-│   └── milk_classifier_cnn.keras  # Trained CNN model
-├── scripts/
-│   ├── generate_pathogen_images.py # Synthetic data generation(pathogens)
-│   └── train_cnn.py              # Model training script
-├── requirements.txt
-└── README.md
-```
-
-## 🧠 Model Architecture
-
-### CNN Model Details
-- **Input Shape**: (128, 128, 3) RGB images
-- **Architecture**:
-  - 3 Convolutional blocks with batch normalization
-  - Max pooling and dropout layers
-  - Dense layers with regularization
-  - Softmax output for 4 classes
-- **Parameters**: 17.1M total parameters
-- **Performance**:
-  - Training Accuracy: 99.13%
-  - Validation Accuracy: 86.81%
-
-### Data Processing
-- Image resizing to 128x128
-- RGB color normalization
-- Real-time data augmentation during training
-- Batch processing support
-
-## 🛠️ Technical Stack
-
-### Core Technologies
-- **Deep Learning**: TensorFlow/Keras
-- **Web Interface**: Streamlit
-- **Image Processing**: OpenCV
-- **Data Handling**: NumPy
-- **Real-time Updates**: Streamlit-autorefresh
-
-### Development Tools
-- **Environment**: Python Virtual Environment
-- **Version Control**: Git
-- **IDE**: Visual Studio Code
-- **Package Management**: pip
-
-## 📦 Installation
-
-```bash
-# Clone the repository
-git clone <repository-url>
-cd PROJECT-MAJOR
-
-# Create and activate virtual environment
-python -m venv venv
-.\venv\Scripts\activate  # Windows
-source venv/bin/activate # Linux/Mac
-
-# Install dependencies
-pip install -r requirements.txt
-```
-
-### Requirements
-```txt
-tensorflow>=2.0.0
-opencv-python>=4.5.0
-streamlit>=1.0.0
-numpy>=1.19.0
-pillow>=8.0.0
-streamlit-autorefresh>=0.0.1
-```
-
-## 🚀 Usage
-
-### Running the Application
-```bash
-streamlit run app/app.py
-```
-
-### Features Available
-1. **Real-time Monitoring**
-   - Auto-detection of new microscope captures
-   - Instant classification
-   - History tracking
-
-2. **Manual Upload**
-   - Drag-and-drop interface
-   - Multiple format support
-   - Instant results
-
-3. **Analysis Dashboard**
-   - Classification statistics
-   - Model performance metrics
-   - Export functionality
-
-## 📈 Model Training
-
-### Dataset Details
-- **Total Images**: 8,000
-- **Distribution**: 
-  - Pure Milk: 2,000 images
-  - Glucose Adulterated: 2,000 images
-  - Other Adulterants: 2,000 images
-  - Pathogen Contaminated: 2,000 images
-
-### Training Process
-```bash
-python scripts/train_cnn.py
-```
-- Data augmentation during training
-- Early stopping to prevent overfitting
-- Learning rate scheduling
-- Model checkpointing
-
-## 🔧 Maintenance
-
-### Adding New Samples
-1. Place new images in appropriate class folders
-2. Retrain model if needed using train_cnn.py
-3. Model automatically updates in the application
-
-### Monitoring
-- Real-time capture folder monitoring
-- Automatic error logging
-- Performance statistics tracking
-
-## 👥 Contributors
-- Nithin R Poojary
-- Vikas Pawar
-- Rahul Vasnt Gunaga
-- Mahendra Kummar P
-
+## ✨ Key Features
+- **Dual Inference Engine**: Upload individual `.jpg/.png` files or attach a microscopy feed hardware folder for real-time live scanning.
+- **Deep Learning Accuracy**: Employs an optimized Keras CNN architecture with 86.81% validation accuracy across 4 categorical classes:
+  - ✅ **Pure Milk**
+  - ⚠️ **Glucose Adulterated**
+  - ❌ **Chemical Adulterated**
+  - 🦠 **Pathogen Contaminated**
+- **Modern 3D Interface**: A fully responsive frontend built with **React, Vite, Three.js, and TailwindCSS**, featuring glassmorphism micro-animations.
+- **Secure Backend System**: A lightning-fast **FastAPI** backend with military-grade JWT authentication, IP Rate-limiting, brute-force lockout mechanics, and magic-byte image evaluation.
 
 ---
-*Last Updated: October 5, 2025*
+
+## 🛠️ Architecture Setup
+This project transitioned from a basic Python script into a fully containerized microservice monolith.
+
+- **Frontend**: React 19 + Vite (Deployed on [Vercel](https://vercel.com))
+- **Backend Core**: Python 3.10 + FastAPI (Deployed on [Render.com](https://render.com))
+- **Machine Learning**: TensorFlow / Keras models
+- **Database**: Secure local SQLite3 relational schemas
+- **Storage**: Real-time processed image volumes
+
+### Production Security Parameters (Enabled)
+- 🔒 **CSP Headers**: Prevents remote XSS scaling by restricting `connect-src` and `frame-ancestors`.
+- ⏳ **Rate Limiter**: Implemented a Token-Bucket algorithm limiting authentication and image-processing DOS attempts.
+- 🛡️ **LFI / Path Traversal Prevention**: Stripped string rendering on image fetch API.
+- 🔑 **Strict Password Policies**: SHA-256 BCrypt hashing (12 rounds) matching strict alphanumeric rules.
+
+---
+
+## 🚀 Running The Project Locally
+
+We have designed a single-click environment bootstrapping script for Windows developers.
+
+### Prerequisites:
+- Python 3.10+
+- Node.js v20+
+
+### Step-by-Step Launch:
+1. Clone the repository to your local machine.
+2. Initialize your backend Python virtual environment:
+   ```bash
+   python -m venv venv
+   call venv\Scripts\activate.bat
+   pip install -r requirements.txt
+   ```
+3. **Boot Everything in One Click:**
+   Double click the **`run_local.bat`** file in the root folder.
+   
+This script will automatically:
+- Inject a local `JWT_SECRET_KEY` so your security middleware doesn't crash.
+- Install any missing React frontend Node dependencies.
+- Open **two** parallel terminal windows (FastAPI Server on `localhost:8000` & Vite React Server on `localhost:5173`).
+
+---
+
+## 📈 ML Model Architecture 
+- **Input Shape**: (128, 128, 3) RGB normalized arrays
+- **Blocks**: 3 Convolutional Neural layers, max-pooling scaling, and dropout stabilization to prevent overfitting.
+- **Weights**: Checkpointed at `models/milk_classifier_cnn.keras`.
+- **Params**: ~17 Million optimized weights.
+
+---
+
+## 👥 Meet The Team
+This platform was engineered and built by:
+
+- **Nithin R Poojary**
+- **Vikas Pawar**
+- **Rahul Vasnt Gunaga**
+- **Mahendra Kummar P**
+
+---
+*AMBER Biotech Security. Advancing global food supply chain safety through automated, edge-deployment AI.*
