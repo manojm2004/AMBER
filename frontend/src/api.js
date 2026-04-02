@@ -1,7 +1,9 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:8000';
-
+// Connect to production on Render if built; else connect to local server
+const API_URL = import.meta.env.PROD 
+  ? 'https://amber-backend-agk2.onrender.com' 
+  : 'http://localhost:8000';
 const api = axios.create({
   baseURL: API_URL,
 });
