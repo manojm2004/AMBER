@@ -153,8 +153,10 @@ class SecurityHeadersMiddleware(BaseHTTPMiddleware):
             "connect-src 'self' https://*.onrender.com https://*.vercel.app; "
             "frame-ancestors 'none';"
         )
-        # Remove server version fingerprint
-        response.headers.pop("server", None)
-        response.headers.pop("x-powered-by", None)
+        # Remove server version fingerprint if present
+        if "server" in response.headers:
+            del response.headers["server"]
+        if "x-powered-by" in response.headers:
+            del response.headers["x-powered-by"]
 
         return response

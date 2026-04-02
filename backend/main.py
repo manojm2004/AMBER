@@ -69,6 +69,7 @@ async def global_exception_handler(request: Request, exc: Exception):
         content={"detail": "An internal server error occurred."}
     )
 
+
 # ── Routers ───────────────────────────────────────────────────────────
 app.include_router(auth_router)
 app.include_router(predict_router)
