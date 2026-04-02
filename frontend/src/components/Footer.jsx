@@ -52,31 +52,21 @@ export default function Footer() {
           </ul>
         </div>
 
-        {/* 4 & 5. Team Details & Contact */}
+        {/* 4. Contact & Social */}
         <div className="flex flex-col gap-4">
           <div>
-            <h3 className="font-mono text-sm tracking-widest text-white uppercase mb-2">Core Engineering Team</h3>
-            <ul className="space-y-1 text-sm text-amber-muted">
-              <li><strong className="text-amber-white font-medium">Nithin R Poojary</strong></li>
-              <li>Vikas Pawar</li>
-              <li>Rahul Vasnt Gunaga</li>
-              <li>Mahendra Kummar P</li>
-            </ul>
-             <p className="font-mono text-[10px] tracking-widest text-amber-green uppercase mt-3 py-1 px-2 border border-amber-green/30 rounded inline-block bg-amber-green/5">
-                Developed at REVA University
-             </p>
-          </div>
-
-          <div className="flex items-center gap-4 mt-2">
-            <a href="mailto:project-amber@reva.edu.in" className="text-amber-muted hover:text-amber-cyan transition-colors" title="Email Team">
-               <Mail size={18} />
-            </a>
-            <a href="https://github.com" target="_blank" rel="noreferrer" className="text-amber-muted hover:text-white transition-colors" title="GitHub Repository">
-               <Globe size={18} />
-            </a>
-            <a href="https://linkedin.com" target="_blank" rel="noreferrer" className="text-amber-muted hover:text-amber-cyan transition-colors" title="LinkedIn">
-               <AtSign size={18} />
-            </a>
+            <h3 className="font-mono text-sm tracking-widest text-white uppercase mb-4">Contact & Source</h3>
+            <div className="flex items-center gap-4">
+              <a href="mailto:project-amber@reva.edu.in" className="text-amber-muted hover:text-amber-cyan transition-colors" title="Email Team">
+                 <Mail size={18} />
+              </a>
+              <a href="https://github.com" target="_blank" rel="noreferrer" className="text-amber-muted hover:text-white transition-colors" title="GitHub Repository">
+                 <Globe size={18} />
+              </a>
+              <a href="https://linkedin.com" target="_blank" rel="noreferrer" className="text-amber-muted hover:text-amber-cyan transition-colors" title="LinkedIn">
+                 <AtSign size={18} />
+              </a>
+            </div>
           </div>
         </div>
 

@@ -43,10 +43,12 @@ This project transitioned from a basic Python script into a fully containerized 
 ## 👥 Meet The Team
 This platform was engineered and built by:
 
-- **Nithin R Poojary**
-- **Vikas Pawar**
-- **Rahul Vasnt Gunaga**
-- **Mahendra Kummar P**
+- **Manoj M (Project Leader)**
+- **Naveen Patil**
+- **Sharanu**
+- **Yashawanth B L**
+
+*Developed at REVA University*
 
 ---
 *AMBER Biotech Security. Advancing global food supply chain safety through automated, edge-deployment AI.*
