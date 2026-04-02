@@ -57,10 +57,10 @@ export default function Footer() {
           <div>
             <h3 className="font-mono text-sm tracking-widest text-white uppercase mb-2">Core Engineering Team</h3>
             <ul className="space-y-1 text-sm text-amber-muted">
-              <li><strong className="text-amber-white font-medium">Manoj M</strong> <span className="text-xs text-amber-border">(Project Leader)</span></li>
-              <li>Naveen Patil</li>
-              <li>Sharanu</li>
-              <li>Yashawanth B L</li>
+              <li><strong className="text-amber-white font-medium">Nithin R Poojary</strong></li>
+              <li>Vikas Pawar</li>
+              <li>Rahul Vasnt Gunaga</li>
+              <li>Mahendra Kummar P</li>
             </ul>
              <p className="font-mono text-[10px] tracking-widest text-amber-green uppercase mt-3 py-1 px-2 border border-amber-green/30 rounded inline-block bg-amber-green/5">
                 Developed at REVA University

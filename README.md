@@ -31,33 +31,6 @@ This project transitioned from a basic Python script into a fully containerized 
 - 🛡️ **LFI / Path Traversal Prevention**: Stripped string rendering on image fetch API.
 - 🔑 **Strict Password Policies**: SHA-256 BCrypt hashing (12 rounds) matching strict alphanumeric rules.
 
----
-
-## 🚀 Running The Project Locally
-
-We have designed a single-click environment bootstrapping script for Windows developers.
-
-### Prerequisites:
-- Python 3.10+
-- Node.js v20+
-
-### Step-by-Step Launch:
-1. Clone the repository to your local machine.
-2. Initialize your backend Python virtual environment:
-   ```bash
-   python -m venv venv
-   call venv\Scripts\activate.bat
-   pip install -r requirements.txt
-   ```
-3. **Boot Everything in One Click:**
-   Double click the **`run_local.bat`** file in the root folder.
-   
-This script will automatically:
-- Inject a local `JWT_SECRET_KEY` so your security middleware doesn't crash.
-- Install any missing React frontend Node dependencies.
-- Open **two** parallel terminal windows (FastAPI Server on `localhost:8000` & Vite React Server on `localhost:5173`).
-
----
 
 ## 📈 ML Model Architecture 
 - **Input Shape**: (128, 128, 3) RGB normalized arrays
