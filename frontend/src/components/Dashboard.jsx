@@ -62,15 +62,15 @@ export default function Dashboard() {
       
       {/* HARDWARE VERIFICATION MODAL */}
       {selectedRecord && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-fade-in">
-          <div className="bg-amber-surface border border-amber-border w-full max-w-2xl rounded-lg shadow-[0_0_30px_rgba(0,188,212,0.15)] flex flex-col overflow-hidden">
-            <div className="flex justify-between items-center p-4 border-b border-amber-border/50 bg-black/40">
-              <h3 className="font-mono text-amber-cyan text-sm tracking-widest flex items-center gap-2">
-                <ImageIcon size={16}/> RECORD INSPECTION
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-gray-900/40 backdrop-blur-[2px] animate-fade-in">
+          <div className="bg-white border border-gray-200 w-full max-w-2xl rounded-2xl shadow-xl flex flex-col overflow-hidden">
+            <div className="flex justify-between items-center p-4 border-b border-gray-100 bg-gray-50">
+              <h3 className="font-sans font-bold text-amber-primary text-sm tracking-wide flex items-center gap-2">
+                <ImageIcon size={16}/> Record Inspection
               </h3>
               <button 
                 onClick={() => setSelectedRecord(null)}
-                className="text-amber-muted hover:text-white transition-colors"
+                className="text-gray-400 hover:text-amber-primary transition-colors"
               >
                 <X size={20}/>
               </button>
@@ -78,38 +78,38 @@ export default function Dashboard() {
             
             <div className="p-6">
                <div className="flex flex-col md:flex-row gap-6">
-                 <div className="w-full md:w-1/2 rounded border border-amber-border/50 bg-black overflow-hidden relative aspect-square flex items-center justify-center">
+                 <div className="w-full md:w-1/2 rounded-xl border border-gray-200 bg-gray-50 overflow-hidden relative aspect-square flex items-center justify-center shadow-inner">
                     <img 
                       src={`http://localhost:8000/api/predictions/image/${selectedRecord.filename}`} 
                       alt="Sample"
-                      className="w-full h-full object-cover opacity-90 hover:opacity-100 transition-opacity"
+                      className="w-full h-full object-cover opacity-95 hover:opacity-100 transition-opacity"
                       onError={(e) => { 
                          e.target.style.display='none'; 
                          e.target.nextSibling.style.display='flex'; 
                       }}
                     />
-                    <div className="hidden absolute inset-0 flex flex-col items-center justify-center text-amber-muted font-mono text-xs">
+                    <div className="hidden absolute inset-0 flex flex-col items-center justify-center text-gray-400 font-sans font-medium text-xs">
                        <FileWarning size={24} className="mb-2 opacity-50"/>
-                       IMAGE FILE NO LONGER ON DISK
+                       Image file missing
                     </div>
                  </div>
                  
                  <div className="w-full md:w-1/2 flex flex-col justify-center">
-                    <p className="font-mono text-[10px] text-amber-muted tracking-widest mb-1">FILENAME</p>
-                    <p className="font-mono text-sm text-amber-white mb-6 truncate">{selectedRecord.filename}</p>
+                    <p className="font-sans font-bold text-[10px] text-gray-400 uppercase tracking-widest mb-1">Filename</p>
+                    <p className="font-sans font-medium text-sm text-amber-primary mb-6 truncate">{selectedRecord.filename}</p>
 
-                    <p className="font-mono text-[10px] text-amber-muted tracking-widest mb-1">TIMESTAMP</p>
-                    <p className="font-mono text-sm text-amber-white mb-6">{formatDate(selectedRecord.timestamp)}</p>
+                    <p className="font-sans font-bold text-[10px] text-gray-400 uppercase tracking-widest mb-1">Timestamp</p>
+                    <p className="font-sans font-medium text-sm text-amber-primary mb-6">{formatDate(selectedRecord.timestamp)}</p>
 
-                    <p className="font-mono text-[10px] text-amber-muted tracking-widest mb-1">AI DETECTED</p>
-                    <div className={`px-4 py-2 inline-block rounded font-mono font-bold tracking-widest text-sm mb-6 max-w-max shadow-md ${selectedRecord.prediction_label === 'Pure' ? 'bg-amber-green text-black' : selectedRecord.prediction_label === 'Glucose' ? 'bg-[#aaaaaa] text-black' : selectedRecord.prediction_label === 'Pathogens' ? 'bg-amber-purple text-white' : 'bg-red-500 text-white'}`}>
+                    <p className="font-sans font-bold text-[10px] text-gray-400 uppercase tracking-widest mb-1">AI Classification</p>
+                    <div className={`px-4 py-2 inline-block rounded-md font-sans font-bold tracking-wide text-xs mb-6 max-w-max shadow-sm ${selectedRecord.prediction_label === 'Pure' ? 'bg-[#E8F8EE] text-[#28C76F] border border-[#28C76F]/30' : selectedRecord.prediction_label === 'Glucose' ? 'bg-gray-100 text-gray-600 border border-gray-300' : selectedRecord.prediction_label === 'Pathogens' ? 'bg-[#F4EFFF] text-[#8B5CF6] border border-[#8B5CF6]/30' : 'bg-[#FDECEE] text-[#EA5455] border border-[#EA5455]/30'}`}>
                       {selectedRecord.prediction_label}
                     </div>
 
-                    <p className="font-mono text-[10px] text-amber-muted tracking-widest mb-1">CONFIDENCE</p>
+                    <p className="font-sans font-bold text-[10px] text-gray-400 uppercase tracking-widest mb-1">Confidence Score</p>
                     <div className="flex items-center gap-3">
-                       <span className="font-mono text-lg text-amber-cyan">{(selectedRecord.confidence * 100).toFixed(1)}%</span>
-                       <div className="h-1.5 flex-1 bg-black rounded-full overflow-hidden">
+                       <span className="font-sans font-bold text-lg text-amber-cyan">{(selectedRecord.confidence * 100).toFixed(1)}%</span>
+                       <div className="h-1.5 flex-1 bg-gray-200 rounded-full overflow-hidden">
                          <div className="h-full bg-amber-cyan" style={{width: `${selectedRecord.confidence * 100}%`}}></div>
                        </div>
                     </div>
@@ -117,15 +117,15 @@ export default function Dashboard() {
                </div>
             </div>
             
-            <div className="p-4 bg-black/40 border-t border-amber-border/50 flex justify-between items-center">
-               <span className="font-mono text-[10px] text-amber-muted">ID: {selectedRecord.id}</span>
+            <div className="p-5 bg-gray-50 border-t border-gray-100 flex justify-between items-center">
+               <span className="font-sans font-medium text-[11px] text-gray-400">ID: {selectedRecord.id}</span>
                
                <button 
                   onClick={handleDeleteRecord}
                   disabled={isDeleting}
-                  className="px-4 py-2 bg-red-500/10 hover:bg-red-500/20 text-red-500 border border-red-500/50 hover:border-red-500 rounded font-mono text-xs font-bold tracking-widest transition-all flex items-center gap-2 disabled:opacity-50"
+                  className="px-4 py-2 bg-white hover:bg-[#FDECEE] text-amber-red border border-gray-300 hover:border-amber-red rounded-lg font-sans text-xs font-bold transition-all flex items-center gap-2 disabled:opacity-50 shadow-sm"
                >
-                 <Trash2 size={14}/> {isDeleting ? 'ERASING...' : 'DELETE RECORD FOREVER'}
+                 <Trash2 size={14}/> {isDeleting ? 'Erasing...' : 'Delete Record'}
                </button>
             </div>
           </div>
@@ -133,125 +133,122 @@ export default function Dashboard() {
       )}
 
       {/* 5-Column KPIs Matching app.py */}
-      <div className="grid grid-cols-2 md:grid-cols-5 gap-3 mb-6">
-        <div className="sci-card flex flex-col items-center justify-center p-4 bg-black/50 border-amber-border">
-          <div className="font-mono text-2xl text-amber-cyan font-bold leading-none mb-1">{stats?.total || 0}</div>
-          <h3 className="font-mono text-[11px] text-amber-muted uppercase tracking-widest">Total Samples</h3>
+      <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-8">
+        <div className="flex flex-col items-center justify-center p-5 bg-white border border-gray-200 rounded-2xl shadow-sm">
+          <div className="font-sans text-2xl text-blue-500 font-extrabold leading-none mb-2">{stats?.total || 0}</div>
+          <h3 className="font-sans text-[11px] font-bold text-gray-400 uppercase tracking-wider">Total Samples</h3>
         </div>
-        <div className="sci-card flex flex-col items-center justify-center p-4 bg-black/50 border-amber-border">
-          <div className="font-mono text-2xl text-amber-green font-bold leading-none mb-1">{stats?.breakdown?.Pure || 0}</div>
-          <h3 className="font-mono text-[11px] text-amber-muted uppercase tracking-widest">Pure Milk</h3>
+        <div className="flex flex-col items-center justify-center p-5 bg-white border border-gray-200 rounded-2xl shadow-sm">
+          <div className="font-sans text-2xl text-[#28C76F] font-extrabold leading-none mb-2">{stats?.breakdown?.Pure || 0}</div>
+          <h3 className="font-sans text-[11px] font-bold text-gray-400 uppercase tracking-wider">Pure Milk</h3>
         </div>
-        <div className="sci-card flex flex-col items-center justify-center p-4 bg-black/50 border-amber-border">
-          <div className="font-mono text-2xl text-red-500 font-bold leading-none mb-1">{stats?.breakdown?.Adulterated || 0}</div>
-          <h3 className="font-mono text-[11px] text-amber-muted uppercase tracking-widest">Adulterated</h3>
+        <div className="flex flex-col items-center justify-center p-5 bg-white border border-gray-200 rounded-2xl shadow-sm">
+          <div className="font-sans text-2xl text-[#EA5455] font-extrabold leading-none mb-2">{stats?.breakdown?.Adulterated || 0}</div>
+          <h3 className="font-sans text-[11px] font-bold text-gray-400 uppercase tracking-wider">Adulterated</h3>
         </div>
-        <div className="sci-card flex flex-col items-center justify-center p-4 bg-black/50 border-amber-border">
-          <div className="font-mono text-2xl text-[#aaaaaa] font-bold leading-none mb-1">{stats?.breakdown?.Glucose || 0}</div>
-          <h3 className="font-mono text-[11px] text-amber-muted uppercase tracking-widest">Glucose</h3>
+        <div className="flex flex-col items-center justify-center p-5 bg-white border border-gray-200 rounded-2xl shadow-sm">
+          <div className="font-sans text-2xl text-gray-500 font-extrabold leading-none mb-2">{stats?.breakdown?.Glucose || 0}</div>
+          <h3 className="font-sans text-[11px] font-bold text-gray-400 uppercase tracking-wider">Glucose</h3>
         </div>
-        <div className="sci-card flex flex-col items-center justify-center p-4 bg-black/50 border-amber-border">
-          <div className="font-mono text-2xl text-amber-purple font-bold leading-none mb-1">{stats?.breakdown?.Pathogens || 0}</div>
-          <h3 className="font-mono text-[11px] text-amber-muted uppercase tracking-widest">Pathogens</h3>
+        <div className="flex flex-col items-center justify-center p-5 bg-white border border-gray-200 rounded-2xl shadow-sm">
+          <div className="font-sans text-2xl text-[#8B5CF6] font-extrabold leading-none mb-2">{stats?.breakdown?.Pathogens || 0}</div>
+          <h3 className="font-sans text-[11px] font-bold text-gray-400 uppercase tracking-wider">Pathogens</h3>
         </div>
       </div>
 
-      <div className="flex flex-col lg:flex-row gap-6">
+      <div className="flex flex-col lg:flex-row gap-8">
         {/* Main Table Area */}
         <div className="w-full lg:w-2/3">
-          <div className="sci-card bg-black/40 h-full">
-            <div className="flex justify-between items-center mb-6">
+          <div className="bg-white border border-gray-200 rounded-2xl shadow-sm h-full flex flex-col overflow-hidden">
+            <div className="flex justify-between items-center p-6 border-b border-gray-100 bg-gray-50">
               <div className="flex flex-col">
-                 <h2 className="sci-title border-none m-0 p-0 flex items-center gap-2 text-amber-cyan-dim">
-                   <Clock size={16} /> RECENT TIMELINE
+                 <h2 className="font-sans font-bold text-lg text-amber-primary flex items-center gap-2">
+                   <Clock size={18} className="text-blue-500" /> Recent Timeline
                  </h2>
-                 <span className="font-mono text-[10px] text-amber-muted tracking-widest mt-1">CLICK ANY ROW TO VIEW AND DELETE</span>
+                 <span className="font-sans font-medium text-[11px] text-gray-400 mt-1">Select a row to inspect or delete</span>
               </div>
-              <button onClick={exportCSV} disabled={!history.length} className="sci-btn flex items-center gap-2 py-1 text-xs px-3 disabled:opacity-50 disabled:cursor-not-allowed">
-                 <Download size={14}/> EXPORT CSV
+              <button onClick={exportCSV} disabled={!history.length} className="flex items-center gap-2 py-1.5 px-4 bg-white border border-gray-200 text-amber-primary hover:border-blue-400 hover:text-blue-500 font-sans font-semibold text-xs rounded-lg shadow-sm disabled:opacity-50 disabled:cursor-not-allowed transition-all">
+                 <Download size={14}/> Export CSV
               </button>
             </div>
 
-            <div className="overflow-x-auto">
-              <table className="w-full text-left font-mono text-sm">
-                <thead className="text-amber-cyandim border-b border-amber-border uppercase text-xs tracking-wider">
+            <div className="overflow-x-auto flex-1">
+              <table className="w-full text-left font-sans text-sm">
+                <thead className="bg-white border-b border-gray-100 text-gray-500 uppercase text-[10px] font-bold tracking-wider">
                   <tr>
-                    <th className="px-4 py-3">Timestamp</th>
-                    <th className="px-4 py-3">Filename</th>
-                    <th className="px-4 py-3">Prediction</th>
-                    <th className="px-4 py-3">Confidence</th>
+                    <th className="px-6 py-4">Timestamp</th>
+                    <th className="px-6 py-4">Filename</th>
+                    <th className="px-6 py-4">Prediction</th>
+                    <th className="px-6 py-4">Confidence</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-amber-border/50 text-amber-white">
+                <tbody className="divide-y divide-gray-100 text-amber-primary font-medium">
                   {history.length === 0 ? (
                     <tr>
-                      <td colSpan="4" className="text-center py-8 text-amber-muted">NO DATA FOUND IN ARCHIVE</td>
+                      <td colSpan="4" className="text-center py-12 text-gray-400">No records found in the archive.</td>
                     </tr>
                   ) : history.slice(0, 15).map((row) => (
                     <tr 
                       key={row.id} 
                       onClick={() => setSelectedRecord(row)}
-                      className="hover:bg-amber-cyan/10 cursor-pointer transition-colors group"
+                      className="hover:bg-blue-50/50 cursor-pointer transition-colors group"
                     >
-                      <td className="px-4 py-3 text-amber-muted group-hover:text-amber-white transition-colors text-xs">{formatDate(row.timestamp)}</td>
-                      <td className="px-4 py-3 truncate max-w-[150px] text-xs">{row.filename}</td>
-                      <td className="px-4 py-3 text-xs">
-                        <span className={`inline-block w-2 h-2 rounded-full mr-2 ${row.prediction_label === 'Pure' ? 'bg-amber-green' : row.prediction_label === 'Glucose' ? 'bg-[#aaaaaa]' : row.prediction_label === 'Pathogens' ? 'bg-amber-purple' : 'bg-red-500'}`}></span>
+                      <td className="px-6 py-4 text-gray-500 group-hover:text-amber-primary transition-colors text-xs">{formatDate(row.timestamp)}</td>
+                      <td className="px-6 py-4 truncate max-w-[150px] text-xs">{row.filename}</td>
+                      <td className="px-6 py-4 text-xs font-bold">
+                        <span className={`inline-block w-2.5 h-2.5 rounded-full mr-2 ${row.prediction_label === 'Pure' ? 'bg-[#28C76F]' : row.prediction_label === 'Glucose' ? 'bg-gray-400' : row.prediction_label === 'Pathogens' ? 'bg-[#8B5CF6]' : 'bg-[#EA5455]'}`}></span>
                         {row.prediction_label}
                       </td>
-                      <td className="px-4 py-3">
-                        <div className="flex items-center gap-2">
-                          <span className={`${row.confidence > 0.9 ? 'text-amber-cyan' : 'text-amber-muted group-hover:text-amber-cyan'} transition-colors text-xs`}>
-                            {(row.confidence * 100).toFixed(1)}%
-                          </span>
-                          <div className="w-12 h-1 bg-black rounded-full overflow-hidden hidden sm:block">
-                            <div className="h-full bg-amber-cyan" style={{ width: `${row.confidence * 100}%` }}></div>
-                          </div>
+                      <td className="px-6 py-4 flex items-center gap-3">
+                        <span className="font-bold text-xs text-blue-500">
+                          {(row.confidence * 100).toFixed(1)}%
+                        </span>
+                        <div className="w-16 h-1.5 bg-gray-200 rounded-full overflow-hidden hidden sm:block">
+                          <div className="h-full bg-blue-500" style={{ width: `${row.confidence * 100}%` }}></div>
                         </div>
                       </td>
                     </tr>
                   ))}
                 </tbody>
               </table>
-              {history.length > 15 && <div className="text-center text-amber-muted text-xs font-mono mt-4 pt-4 border-t border-amber-border/50">+ {history.length - 15} Older Records Hidden</div>}
+              {history.length > 15 && <div className="text-center text-gray-400 text-xs font-sans font-medium py-4 bg-gray-50 border-t border-gray-100">+ {history.length - 15} older records available in CSV export</div>}
             </div>
           </div>
         </div>
 
         {/* Right Sidebar: Model Performance matching app.py */}
-        <div className="w-full lg:w-1/3 flex flex-col gap-6">
-          <div className="sci-card bg-black/40 h-max">
-            <h2 className="sci-title border-b border-amber-border pb-3 m-0 flex items-center gap-2 text-amber-cyan-dim">
-              <Settings size={16} /> MODEL PERFORMANCE
+        <div className="w-full lg:w-1/3 flex flex-col gap-8">
+          <div className="bg-white border border-gray-200 rounded-2xl shadow-sm p-6">
+            <h2 className="font-sans font-bold text-lg text-amber-primary flex items-center gap-2 mb-6 pb-4 border-b border-gray-100">
+              <Settings size={18} className="text-blue-500" /> Model Parameters
             </h2>
-            <div className="flex flex-col mt-4">
-              <div className="flex justify-between items-center py-3 border-b border-amber-border/50">
-                <span className="font-mono text-xs text-amber-white">Validation Accuracy</span>
-                <span className="font-mono text-sm text-amber-cyan font-bold">86.81%</span>
-              </div>
-              <div className="flex justify-between items-center py-3 border-b border-amber-border/50">
-                <span className="font-mono text-xs text-amber-white">Training Accuracy</span>
-                <span className="font-mono text-sm text-amber-cyan font-bold">99.13%</span>
-              </div>
-              <div className="flex justify-between items-center py-3 border-b border-amber-border/50">
-                <span className="font-mono text-xs text-amber-white">Parameters</span>
-                <span className="font-mono text-sm text-amber-cyan font-bold">17.1M</span>
-              </div>
-              <div className="flex justify-between items-center py-3 border-b border-amber-border/50">
-                <span className="font-mono text-xs text-amber-white">Input Size</span>
-                <span className="font-mono text-sm text-amber-cyan font-bold">128 × 128</span>
+            <div className="flex flex-col gap-1">
+              <div className="flex justify-between items-center py-3">
+                <span className="font-sans font-semibold text-xs text-gray-500">Validation Accuracy</span>
+                <span className="font-sans text-sm text-amber-cyan font-bold bg-blue-50 px-2 py-1 rounded">86.81%</span>
               </div>
               <div className="flex justify-between items-center py-3">
-                <span className="font-mono text-xs text-amber-white">Classes</span>
-                <span className="font-mono text-sm text-amber-cyan font-bold">4</span>
+                <span className="font-sans font-semibold text-xs text-gray-500">Training Accuracy</span>
+                <span className="font-sans text-sm text-green-500 font-bold bg-[#E8F8EE] px-2 py-1 rounded">99.13%</span>
+              </div>
+              <div className="flex justify-between items-center py-3">
+                <span className="font-sans font-semibold text-xs text-gray-500">Parameters</span>
+                <span className="font-sans text-sm text-amber-primary font-bold">17.1M</span>
+              </div>
+              <div className="flex justify-between items-center py-3">
+                <span className="font-sans font-semibold text-xs text-gray-500">Input Size</span>
+                <span className="font-sans text-sm text-amber-primary font-bold">128 × 128</span>
+              </div>
+              <div className="flex justify-between items-center py-3">
+                <span className="font-sans font-semibold text-xs text-gray-500">Classes</span>
+                <span className="font-sans text-sm text-amber-primary font-bold">4</span>
               </div>
             </div>
           </div>
           
-          {/* We can place the visual breakdowns here too maybe? Or keep it simple. */}
-          <div className="sci-card bg-amber-cyan/5 border-amber-cyan/30 text-center h-full flex flex-col justify-center border-dashed">
-            <Activity size={24} className="mx-auto text-amber-muted opacity-50 mb-2"/>
-            <span className="font-mono text-[10px] text-amber-muted tracking-widest">AMBER ML ENGINE ACTIVE</span>
+          <div className="bg-gray-50 border border-gray-200 rounded-2xl p-6 text-center flex flex-col justify-center items-center">
+            <Activity size={28} className="text-blue-400 mb-3"/>
+            <span className="font-sans font-bold text-[11px] text-gray-500 uppercase tracking-widest">Inference engine online</span>
           </div>
         </div>
       </div>

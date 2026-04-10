@@ -44,59 +44,64 @@ export default function Upload() {
   };
 
   return (
-    <div className="sci-card w-full max-w-2xl mx-auto mt-6">
-      <h2 className="sci-title flex items-center gap-2"><UploadCloud /> Upload Sample for AI Analysis</h2>
+    <div className="bg-white border border-gray-200 w-full max-w-2xl mx-auto mt-6 p-8 rounded-2xl shadow-sm">
+      <h2 className="font-sans font-bold text-xl text-amber-primary flex items-center gap-3 border-b border-gray-100 pb-4">
+        <div className="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center text-blue-500">
+           <UploadCloud size={20} />
+        </div>
+        Upload Sample for AI Analysis
+      </h2>
       
-      <div className="flex flex-col items-center gap-6 py-6">
-        <label className="border-2 border-dashed border-amber-cyandim w-full h-48 flex flex-col items-center justify-center rounded-xl cursor-pointer hover:bg-amber-cyandim/10 transition-colors">
-          <UploadCloud size={48} className="text-amber-cyandim mb-4" />
-          <span className="font-mono text-sm text-amber-cyan">Click or drag image file here</span>
-          <span className="font-sans text-xs text-amber-muted mt-2">Supports JPG, PNG, BMP</span>
+      <div className="flex flex-col items-center gap-6 pt-6">
+        <label className="border-2 border-dashed border-gray-300 w-full h-56 flex flex-col items-center justify-center rounded-2xl cursor-pointer hover:bg-blue-50 hover:border-blue-400 transition-all bg-gray-50 group">
+          <UploadCloud size={48} className="text-gray-400 group-hover:text-blue-500 mb-4 transition-colors" />
+          <span className="font-sans font-bold text-sm text-amber-primary">Click or drag image file here</span>
+          <span className="font-sans font-medium text-xs text-gray-500 mt-2">Supports JPG, PNG, BMP</span>
           <input type="file" className="hidden" accept="image/*" onChange={handleFileChange} />
         </label>
 
         {preview && (
-          <div className="w-full flex gap-4 mt-6 p-4 border border-amber-border rounded-lg bg-black/30">
-            <img src={preview} alt="Sample Preview" className="h-48 object-contain bg-black rounded" />
+          <div className="w-full flex flex-col sm:flex-row gap-6 mt-4 p-6 border border-gray-200 rounded-2xl bg-white shadow-sm">
+            <img src={preview} alt="Sample Preview" className="h-48 w-full sm:w-48 object-cover bg-gray-100 rounded-xl" />
             
             <div className="flex-1 flex flex-col justify-between">
               <div>
-                <h3 className="text-amber-cyan font-mono text-xl">{file.name}</h3>
-                <p className="text-amber-muted text-sm mt-1">Ready for classification</p>
+                <h3 className="text-amber-primary font-sans font-bold text-lg truncate max-w-[250px]">{file.name}</h3>
+                <p className="text-gray-500 text-xs font-semibold uppercase tracking-wider mt-1">Ready for classification</p>
               </div>
               
               {!result && !loading && (
-                <button onClick={handleUpload} className="sci-btn-primary py-3 w-full mt-4 flex justify-center items-center gap-2">
-                  <CheckCircle size={18}/> INITIALIZE SCAN
+                <button onClick={handleUpload} className="bg-blue-600 hover:bg-blue-700 text-white font-sans font-bold py-3.5 rounded-xl w-full mt-4 flex justify-center items-center gap-2 shadow-md hover:shadow-lg transition-all tracking-wide uppercase">
+                  <CheckCircle size={18}/> Initialize Scan
                 </button>
               )}
 
               {loading && (
-                <div className="flex flex-col items-center justify-center h-full text-amber-cyan font-mono animate-pulse gap-2">
-                  <UploadCloud className="animate-bounce" size={32}/>
-                  ANALYZING WITH TENSORFLOW...
+                <div className="flex flex-col items-center justify-center h-full text-blue-500 font-sans font-bold animate-pulse gap-3 text-sm tracking-wide uppercase">
+                  <UploadCloud className="animate-bounce" size={28}/>
+                  Analyzing with AI Model...
                 </div>
               )}
 
               {error && (
-                <div className="text-red-500 font-mono text-sm flex items-center gap-2 mt-4 p-3 border border-red-500 rounded bg-red-500/10">
-                  <AlertCircle size={16}/> {error}
+                <div className="text-amber-red font-sans font-semibold text-sm flex items-center gap-2 mt-4 p-4 border border-amber-red/30 rounded-xl bg-[#FDECEE] shadow-sm">
+                  <AlertCircle size={18}/> {error}
                 </div>
               )}
 
               {result && (
-                <div className="mt-4 flex flex-col items-center p-4 bg-amber-surface2 rounded-lg border border-amber-border">
-                  <div className={`pred-badge ${badgeClass(result.prediction_label)} text-xl px-8 py-3 w-full justify-center`}>
+                <div className="mt-4 flex flex-col items-center p-5 bg-gray-50 rounded-xl border border-gray-200">
+                  <div className={`pred-badge ${badgeClass(result.prediction_label)} text-xl px-8 py-3 w-full justify-center shadow-sm`}>
                     {result.prediction_label}
                   </div>
-                  <div className="w-full mt-4">
-                    <div className="flex justify-between font-mono text-xs text-amber-muted mb-1">
-                      <span>CONFIDENCE</span>
-                      <span className="text-amber-cyan">{(result.confidence * 100).toFixed(1)}%</span>
+                  <div className="w-full mt-5">
+                    <div className="flex justify-between font-sans font-bold text-[10px] text-gray-500 mb-2 uppercase tracking-widest">
+                      <span>Confidence Score</span>
+                      <span className="text-blue-600 text-sm">{(result.confidence * 100).toFixed(1)}%</span>
                     </div>
-                    <div className="w-full bg-black rounded-full h-2 overflow-hidden border border-amber-border">
+                    <div className="w-full bg-gray-200 rounded-full h-2 overflow-hidden">
                       <div 
-                        className="bg-amber-cyan h-2 rounded-full transition-all duration-1000" 
+                        className="bg-blue-500 h-2 rounded-full transition-all duration-1000" 
                         style={{ width: `${result.confidence * 100}%` }}
                       ></div>
                     </div>

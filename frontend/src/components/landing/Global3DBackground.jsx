@@ -33,18 +33,18 @@ function MilkDrop() {
 
 export default function Global3DBackground() {
   return (
-    <div className="fixed inset-0 z-0 pointer-events-none opacity-50 xl:opacity-80">
+    <div className="fixed inset-0 z-0 pointer-events-none opacity-40 xl:opacity-60">
       <Canvas camera={{ position: [0, 0, 5], fov: 45 }}>
-        <ambientLight intensity={0.5} />
-        <directionalLight position={[10, 10, 5]} intensity={1} />
+        <ambientLight intensity={0.9} color="#ffffff" />
+        <directionalLight position={[10, 10, 5]} intensity={1.5} color="#ffffff" />
         
         <MilkDrop />
         
-        {/* Glowing particle effects spanning entire screen space */}
-        <Sparkles count={80} scale={15} size={2} color="#ffffff" speed={0.4} opacity={0.6} />
-        <Sparkles count={80} scale={15} size={2} color="#60a5fa" speed={0.2} opacity={0.6} />
+        {/* Soft clinical particle effects spanning entire screen space */}
+        <Sparkles count={80} scale={15} size={3} color="#3A7DFF" speed={0.4} opacity={0.3} />
+        <Sparkles count={50} scale={15} size={2} color="#28C76F" speed={0.2} opacity={0.2} />
         
-        <Environment preset="city" />
+        <Environment preset="studio" />
       </Canvas>
     </div>
   );

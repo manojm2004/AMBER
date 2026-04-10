@@ -11,12 +11,12 @@ const archSteps = [
 
 export default function SystemArchitecture() {
   return (
-    <section className="w-full py-24 bg-black/20 backdrop-blur-md border-t border-amber-border/30">
+    <section className="w-full py-24 bg-gray-50 border-t border-gray-100">
       <div className="max-w-4xl mx-auto px-6">
         
         <div className="text-center mb-16">
-           <h2 className="font-mono text-3xl md:text-5xl font-bold text-amber-white tracking-widest mb-4">SYSTEM ARCHITECTURE</h2>
-           <p className="font-mono text-amber-muted text-sm tracking-widest uppercase mb-6">Fully local edge computing</p>
+           <h2 className="font-sans text-3xl md:text-4xl font-extrabold text-amber-primary mb-4">System Architecture</h2>
+           <p className="font-sans font-medium text-gray-400 text-sm tracking-wide uppercase mb-6">Fully local edge computing</p>
            <div className="w-24 h-1 bg-amber-cyan mx-auto rounded-full"></div>
         </div>
 
@@ -27,26 +27,26 @@ export default function SystemArchitecture() {
                  <div key={step.id} className="flex flex-col items-center w-full">
                     {/* Node */}
                     <motion.div 
-                       initial={{ opacity: 0, y: 30 }}
+                       initial={{ opacity: 0, y: 15 }}
                        whileInView={{ opacity: 1, y: 0 }}
                        viewport={{ once: true, margin: "-50px" }}
                        transition={{ duration: 0.6 }}
-                       className="w-full md:w-[600px] flex items-center gap-6 p-6 bg-black/40 backdrop-blur-lg border border-amber-border rounded-xl shadow-[0_0_15px_rgba(0,0,0,0.5)] hover:border-amber-cyan/50 transition-colors"
+                       className="w-full md:w-[600px] flex items-center gap-6 p-6 bg-white border border-gray-200 rounded-2xl shadow-sm hover:border-blue-200 hover:shadow-md transition-all"
                     >
-                       <div className="w-16 h-16 shrink-0 rounded-full bg-black/50 flex items-center justify-center border border-amber-cyan/30">
-                          <Icon size={24} className="text-amber-cyan" />
+                       <div className="w-16 h-16 shrink-0 rounded-full bg-blue-50 flex items-center justify-center border border-blue-100 text-amber-cyan">
+                          <Icon size={24} />
                        </div>
                        <div>
-                          <h4 className="font-mono text-[10px] text-amber-muted tracking-widest mb-1 uppercase">PHASE 0{step.id}</h4>
-                          <p className="font-sans text-amber-white font-medium">{step.text}</p>
+                          <h4 className="font-sans font-bold text-[11px] text-gray-400 tracking-wider mb-1.5 uppercase">PHASE 0{step.id}</h4>
+                          <p className="font-sans text-amber-primary font-semibold text-lg">{step.text}</p>
                        </div>
                     </motion.div>
                     
                     {/* Connecting dashed line */}
                     {i < archSteps.length - 1 && (
-                      <div className="h-12 w-px border-l-2 border-dashed border-amber-border relative">
+                      <div className="h-12 w-px border-l-2 border-dashed border-gray-300 relative">
                          <motion.div 
-                           className="absolute top-0 -left-[5px] w-2 h-2 rounded-full bg-amber-cyan shadow-[0_0_8px_#00d4ff]"
+                           className="absolute top-0 -left-[5px] w-2 h-2 rounded-full bg-amber-cyan shadow-sm"
                            animate={{ y: [0, 48, 0] }}
                            transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut", delay: i * 0.2 }}
                          />

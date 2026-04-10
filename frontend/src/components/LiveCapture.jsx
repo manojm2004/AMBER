@@ -166,21 +166,21 @@ export default function LiveCapture() {
   };
 
   return (
-    <div className="flex flex-col md:flex-row gap-6">
+    <div className="flex flex-col md:flex-row gap-8">
       {/* LEFT COLUMN: Hardware Camera Feed */}
       <div className="flex-1">
-        <div className="sci-card min-h-[400px]">
-          <div className="flex justify-between items-center mb-6 pb-2 border-b border-amber-border">
-            <h2 className="font-mono text-amber-cyan text-sm tracking-widest uppercase flex items-center gap-2">
-              <Camera size={18}/> DIGITAL MICROSCOPE FEED
+        <div className="bg-white border border-gray-200 rounded-2xl shadow-sm p-6 min-h-[400px]">
+          <div className="flex justify-between items-center mb-6 pb-4 border-b border-gray-100">
+            <h2 className="font-sans font-bold text-amber-primary text-sm tracking-wide uppercase flex items-center gap-2">
+              <Camera size={20} className="text-blue-500"/> Digital Microscope Feed
             </h2>
             <div className="flex items-center gap-4">
                {/* Hardware Selection Dropdown */}
                {cameras.length > 0 && (
                  <div className="flex items-center gap-2">
-                   <Settings size={14} className="text-amber-muted" />
+                   <Settings size={16} className="text-gray-400" />
                    <select 
-                     className="bg-amber-surface2 border border-amber-border text-amber-white text-xs font-mono rounded px-2 py-1 outline-none focus:border-amber-cyan"
+                     className="bg-gray-50 border border-gray-200 text-amber-primary text-xs font-sans font-medium rounded-md px-3 py-1.5 outline-none focus:border-blue-400 transition-colors"
                      value={selectedDeviceId}
                      onChange={(e) => setSelectedDeviceId(e.target.value)}
                    >
@@ -192,9 +192,9 @@ export default function LiveCapture() {
                    </select>
                  </div>
                )}
-               <div className="flex items-center gap-2 text-xs font-mono text-amber-muted border-l border-amber-border pl-4">
-                 <div className={`w-2 h-2 rounded-full ${cameraError ? 'bg-red-500' : 'bg-amber-green animate-pulse shadow-[0_0_8px_#00e676]'}`}></div> 
-                 {cameraError ? 'HARDWARE ERROR' : 'STREAMING LIVE'}
+               <div className="flex items-center gap-2 text-xs font-sans font-bold text-gray-500 border-l border-gray-200 pl-4 uppercase tracking-wider">
+                 <div className={`w-2.5 h-2.5 rounded-full ${cameraError ? 'bg-amber-red shadow-sm' : 'bg-amber-green animate-pulse shadow-[0_0_8px_#28C76F]'}`}></div> 
+                 {cameraError ? 'Hardware Error' : 'Streaming Live'}
                </div>
             </div>
           </div>
@@ -202,23 +202,23 @@ export default function LiveCapture() {
           <div className="flex flex-col items-center">
             
             {/* The Actual Video Feed */}
-            <div className="w-full relative bg-black border border-amber-border rounded-lg overflow-hidden flex items-center justify-center mb-6 aspect-video">
-               <div className="absolute inset-0 bg-amber-cyan/5 border-2 border-amber-cyan/20 m-2 rounded pointer-events-none z-10"></div>
+            <div className="w-full relative bg-gray-900 border border-gray-200 rounded-xl overflow-hidden flex items-center justify-center mb-6 aspect-video shadow-inner">
+               <div className="absolute inset-0 bg-blue-500/5 border-2 border-blue-500/20 m-3 rounded-lg pointer-events-none z-10"></div>
                
                {/* Targeting Crosshairs UI element overlay */}
-               <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-20">
-                 <div className="w-8 h-8 md:w-16 md:h-16 border border-amber-cyan/50 rounded-full"></div>
-                 <div className="w-1 h-2 md:h-4 bg-amber-cyan/50 absolute top-1/2 -mt-1 md:-mt-2 left-1/4"></div>
-                 <div className="w-1 h-2 md:h-4 bg-amber-cyan/50 absolute top-1/2 -mt-1 md:-mt-2 right-1/4"></div>
-                 <div className="w-2 md:w-4 h-1 bg-amber-cyan/50 absolute top-1/4 left-1/2 -ml-1 md:-ml-2"></div>
-                 <div className="w-2 md:w-4 h-1 bg-amber-cyan/50 absolute bottom-1/4 left-1/2 -ml-1 md:-ml-2"></div>
+               <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-20 opacity-70">
+                 <div className="w-8 h-8 md:w-16 md:h-16 border-2 border-dashed border-white/50 rounded-full"></div>
+                 <div className="w-1 h-2 md:h-4 bg-white/50 absolute top-1/2 -mt-1 md:-mt-2 left-1/4"></div>
+                 <div className="w-1 h-2 md:h-4 bg-white/50 absolute top-1/2 -mt-1 md:-mt-2 right-1/4"></div>
+                 <div className="w-2 md:w-4 h-1 bg-white/50 absolute top-1/4 left-1/2 -ml-1 md:-ml-2"></div>
+                 <div className="w-2 md:w-4 h-1 bg-white/50 absolute bottom-1/4 left-1/2 -ml-1 md:-ml-2"></div>
                </div>
 
                {cameraError ? (
-                 <div className="flex flex-col items-center text-red-500 font-mono text-sm max-w-sm text-center p-6 bg-red-500/10 rounded z-30">
-                   <AlertTriangle className="mb-2" size={32} />
+                 <div className="flex flex-col items-center text-amber-red font-sans font-medium text-sm max-w-sm text-center p-6 bg-[#FDECEE] border border-amber-red/30 rounded-xl z-30 shadow-lg">
+                   <AlertTriangle className="mb-3" size={36} />
                    <span>{cameraError}</span>
-                   <button onClick={() => loadDevices()} className="mt-4 px-4 py-2 border border-red-500 rounded hover:bg-red-500 hover:text-white transition-colors">
+                   <button onClick={() => loadDevices()} className="mt-5 px-5 py-2.5 bg-white border border-gray-300 rounded-lg hover:border-amber-red hover:text-amber-red text-amber-primary font-bold transition-colors shadow-sm">
                      RESCAN HARDWARE PORTS
                    </button>
                  </div>
@@ -242,29 +242,29 @@ export default function LiveCapture() {
                  id="hardware-snap-btn"
                  onClick={handleCapture}
                  disabled={!!cameraError || isScanning}
-                 className="flex-1 sci-btn-primary py-4 text-base flex justify-center items-center gap-3 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-transparent disabled:hover:text-amber-cyan"
+                 className="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-sans font-bold py-4 rounded-xl flex justify-center items-center gap-3 transition-colors shadow-md hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed uppercase tracking-wide"
               >
                  <Aperture className={isScanning ? "animate-spin" : ""} size={20}/> 
-                 {isScanning ? 'PROCESSING TENSORFLOW...' : 'CAPTURE & ANALYZE IMAGE'}
+                 {isScanning ? 'Processing inference model...' : 'Capture & Analyze Sample'}
               </button>
             </div>
 
             {/* Below Camera: The latest result breakdown */}
             {latestScan && (
-              <div className="w-full mt-6 bg-amber-surface2 border border-amber-border rounded p-4 flex items-center justify-between">
+              <div className="w-full mt-6 bg-gray-50 border border-gray-200 rounded-xl p-5 flex items-center justify-between shadow-sm">
                 <div>
-                  <div className="font-mono text-amber-muted text-[10px] tracking-widest mb-1">LAST CAPTURE RESULT</div>
-                  <div className={`px-4 py-1 inline-flex rounded font-mono font-bold tracking-widest text-sm shadow-md ${badgeClass(latestScan.prediction_label)}`}>
+                  <div className="font-sans font-bold text-gray-400 text-[10px] tracking-wider uppercase mb-2">Last Capture Result</div>
+                  <div className={`px-4 py-1.5 inline-flex rounded-md font-sans font-bold tracking-wide text-sm shadow-sm ${badgeClass(latestScan.prediction_label)}`}>
                     {latestScan.prediction_label}
                   </div>
                 </div>
                 <div className="text-right ml-8 min-w-[150px]">
-                  <div className="font-mono text-amber-muted text-[10px] tracking-widest mb-1">CONFIDENCE</div>
+                  <div className="font-sans font-bold text-gray-400 text-[10px] tracking-wider uppercase mb-1">Confidence Score</div>
                   <div className="flex items-center justify-end gap-3">
-                    <span className="font-mono text-amber-cyan text-base">{(latestScan.confidence * 100).toFixed(1)}%</span>
+                    <span className="font-sans font-bold text-blue-600 text-lg">{(latestScan.confidence * 100).toFixed(1)}%</span>
                   </div>
-                  <div className="w-full h-1.5 bg-black rounded-full overflow-hidden mt-1">
-                    <div className="h-full bg-amber-cyan transition-all duration-500" style={{width: `${latestScan.confidence * 100}%`}}></div>
+                  <div className="w-full h-2 bg-gray-200 rounded-full overflow-hidden mt-1">
+                    <div className="h-full bg-blue-500 transition-all duration-500" style={{width: `${latestScan.confidence * 100}%`}}></div>
                   </div>
                 </div>
               </div>
@@ -274,24 +274,26 @@ export default function LiveCapture() {
       </div>
 
       {/* RIGHT COLUMN: Timeline */}
-      <div className="w-full md:w-1/3">
-        <div className="sci-card h-full">
-           <h2 className="sci-title flex items-center gap-2"><Activity size={18}/> RECENT TIMELINE</h2>
-           <div className="flex flex-col gap-3 mt-4">
+      <div className="w-full md:w-1/3 flex flex-col gap-6">
+        <div className="bg-white border border-gray-200 rounded-2xl shadow-sm p-6 flex flex-col h-full">
+           <h2 className="font-sans font-bold text-lg text-amber-primary flex items-center gap-2 mb-6 pb-4 border-b border-gray-100">
+             <Activity size={18} className="text-blue-500" /> Recent Captures
+           </h2>
+           <div className="flex flex-col gap-3 flex-1 overflow-y-auto pr-2">
              {liveHistory.map((rec, index) => (
-                <div key={rec.id || index} className="flex items-center gap-3 p-3 bg-amber-surface2 rounded-lg border border-amber-border/50 hover:border-amber-cyan/30 transition-colors">
-                  <div className={`w-2 h-2 rounded-full ${rec.prediction_label === 'Pure' ? 'bg-amber-green' : 'bg-red-500'}`}></div>
+                <div key={rec.id || index} className="flex items-center gap-4 p-4 bg-gray-50 rounded-xl border border-gray-100 hover:border-blue-200 transition-all shadow-sm">
+                  <div className={`w-2.5 h-2.5 rounded-full ${rec.prediction_label === 'Pure' ? 'bg-[#28C76F]' : 'bg-[#EA5455]'}`}></div>
                   <div className="flex-1 overflow-hidden">
-                     <div className="font-mono text-[10px] text-amber-muted">{formatDate(rec.timestamp)}</div>
-                     <div className="font-mono text-xs text-amber-white truncate">{rec.filename}</div>
+                     <div className="font-sans font-bold text-[10px] text-gray-400 uppercase tracking-wider mb-1">{formatDate(rec.timestamp)}</div>
+                     <div className="font-sans font-bold text-sm text-amber-primary truncate">{rec.filename}</div>
                   </div>
-                  <div className={`font-mono font-bold text-xs ${rec.prediction_label === 'Pure' ? 'text-amber-green' : 'text-red-500'}`}>
+                  <div className={`font-sans font-bold text-xs uppercase tracking-wide ${rec.prediction_label === 'Pure' ? 'text-[#28C76F]' : 'text-[#EA5455]'}`}>
                     {rec.prediction_label}
                   </div>
                 </div>
              ))}
              {liveHistory.length === 0 && (
-                <div className="text-center font-mono text-xs text-amber-muted mt-8">NO RECENT CAPTURES</div>
+                <div className="text-center font-sans font-medium text-sm text-gray-400 mt-8">No recent captures available.</div>
              )}
            </div>
         </div>

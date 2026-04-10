@@ -21,7 +21,7 @@ function PrivateLayout({ children, user, setUser }) {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-amber-bg text-amber-white font-sans">
+    <div className="min-h-screen flex flex-col bg-gray-50 text-amber-primary font-sans">
       <Header user={user} handleLogout={handleLogout} />
       
       <main className={`flex-1 w-full mx-auto flex flex-col ${isHome ? '' : 'max-w-7xl p-4 md:p-6 mt-4'}`}>
@@ -54,7 +54,7 @@ function App() {
   }, []);
 
   if (loading) {
-    return <div className="min-h-screen bg-amber-bg flex items-center justify-center font-mono text-amber-cyan tracking-widest text-sm">INITIALIZING SESSION...</div>;
+    return <div className="min-h-screen bg-white flex items-center justify-center font-sans font-bold text-gray-400 tracking-widest text-sm uppercase">Initializing Session...</div>;
   }
 
   return (

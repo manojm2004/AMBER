@@ -9,12 +9,12 @@ const users = [
 
 export default function TargetUsers() {
   return (
-    <section className="w-full py-24 bg-transparent border-t border-amber-border/30">
+    <section className="w-full py-24 bg-transparent border-t border-gray-100">
       <div className="max-w-5xl mx-auto px-6">
         
         <div className="text-center mb-16">
-           <h2 className="font-mono text-3xl md:text-5xl font-bold text-amber-white tracking-widest mb-4">TARGET AUDIENCE</h2>
-           <p className="font-mono text-amber-muted text-sm tracking-widest uppercase mb-6">Designed directly for the edge</p>
+           <h2 className="font-sans text-3xl md:text-4xl font-extrabold text-amber-primary mb-4">Target Audience</h2>
+           <p className="font-sans font-medium text-amber-muted text-sm uppercase tracking-widest mb-6">Designed directly for the edge</p>
            <div className="w-24 h-1 bg-amber-cyan mx-auto rounded-full"></div>
         </div>
 
@@ -24,18 +24,18 @@ export default function TargetUsers() {
              return (
                <motion.div 
                  key={user.id}
-                 whileHover={{ scale: 1.05 }}
-                 initial={{ opacity: 0, scale: 0.9 }}
+                 whileHover={{ y: -5 }}
+                 initial={{ opacity: 0, scale: 0.95 }}
                  whileInView={{ opacity: 1, scale: 1 }}
                  viewport={{ once: true }}
                  transition={{ duration: 0.5, delay: i * 0.1 }}
-                 className="flex flex-col items-center text-center p-8 bg-black/40 backdrop-blur-lg border border-amber-border rounded-xl hover:border-amber-cyan/50 shadow-lg"
+                 className="flex flex-col items-center text-center p-8 bg-white border border-gray-100 rounded-2xl hover:border-blue-200 shadow-sm hover:shadow-lg transition-all"
                >
-                 <div className="w-20 h-20 rounded-full bg-black/50 border border-amber-border flex items-center justify-center mb-6">
-                   <Icon size={36} className="text-amber-muted" />
+                 <div className="w-16 h-16 rounded-full bg-blue-50 text-amber-cyan flex items-center justify-center mb-6">
+                   <Icon size={28} strokeWidth={2} />
                  </div>
-                 <h3 className="font-mono text-lg font-bold text-white tracking-widest mb-3">{user.title}</h3>
-                 <p className="text-sm text-amber-muted font-sans leading-relaxed">{user.desc}</p>
+                 <h3 className="font-sans text-xl font-bold text-amber-primary mb-3">{user.title}</h3>
+                 <p className="text-sm text-gray-500 font-sans leading-relaxed">{user.desc}</p>
                </motion.div>
              )
            })}

@@ -43,37 +43,37 @@ export default function Login({ setUser }) {
   };
 
   return (
-    <div className="flex w-full min-h-screen bg-amber-bg font-sans selection:bg-amber-cyan selection:text-black">
+    <div className="flex w-full min-h-screen bg-white font-sans selection:bg-amber-cyan selection:text-white">
       
       {/* Left Pane - Branding & Visuals (Hidden on small screens) */}
-      <div className="hidden lg:flex lg:w-1/2 bg-amber-surface2 relative overflow-hidden flex-col justify-between p-12 border-r border-amber-border">
+      <div className="hidden lg:flex lg:w-1/2 bg-gray-50 relative overflow-hidden flex-col justify-between p-12 border-r border-gray-200">
           {/* Animated Background Mesh */}
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(96,165,250,0.05)_0%,transparent_50%)]"></div>
-          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-amber-cyan rounded-full mix-blend-screen filter blur-[150px] opacity-10 animate-pulse"></div>
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(58,125,255,0.08)_0%,transparent_50%)]"></div>
+          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-400 rounded-full mix-blend-multiply filter blur-[150px] opacity-10 animate-pulse"></div>
 
           <div className="relative z-10 flex items-center gap-3">
-             <div className="w-12 h-12 bg-amber-cyan/10 border border-amber-cyan/30 flex items-center justify-center rounded-xl shadow-[0_0_15px_rgba(96,165,250,0.2)]">
+             <div className="w-12 h-12 bg-white border border-gray-200 flex items-center justify-center rounded-xl shadow-sm">
                 <FlaskConical size={24} className="text-amber-cyan" />
              </div>
              <div>
-                <h1 className="text-2xl font-bold text-amber-white tracking-[4px] font-mono leading-none">AMBER</h1>
-                <span className="text-[9px] text-amber-cyan font-mono tracking-widest uppercase inline-block mt-1">AI-Driven Milk Bio-Purity Evaluation Resource</span>
+                <h1 className="text-2xl font-bold text-amber-primary tracking-wide font-sans leading-none">AMBER</h1>
+                <span className="text-[10px] text-gray-500 font-sans tracking-widest uppercase inline-block mt-1">Milk Bio-Purity Evaluation Center</span>
              </div>
           </div>
 
           <div className="relative z-10 max-w-lg">
-             <h2 className="text-4xl xl:text-5xl font-bold text-white mb-6 leading-tight font-sans tracking-tight">
+             <h2 className="text-4xl xl:text-5xl font-extrabold text-amber-primary mb-6 leading-tight tracking-tight">
                 Secure the Future of Dairy Analytics.
              </h2>
-             <p className="text-amber-muted text-lg leading-relaxed mb-8">
+             <p className="text-gray-600 text-lg font-medium leading-relaxed mb-8">
                 Connect your laboratory to the edge. Instantly process physical slide captures through a locally optimized Convolutional Neural Network.
              </p>
-             <div className="flex items-center gap-3 text-amber-green font-mono text-sm tracking-widest border border-amber-green/30 px-4 py-2 rounded max-w-max bg-amber-green/5">
+             <div className="flex items-center gap-3 text-amber-green font-sans font-bold text-sm tracking-wide border border-amber-green/30 px-4 py-2.5 rounded-lg max-w-max bg-amber-green/5 shadow-sm">
                 <ShieldCheck size={18} /> END-TO-END ENCRYPTION ACTIVE
              </div>
           </div>
 
-          <div className="relative z-10 font-mono text-[10px] text-amber-muted uppercase tracking-[3px]">
+          <div className="relative z-10 font-sans font-semibold text-[10px] text-gray-400 uppercase tracking-widest">
              System Architecture v1.0.0 · All operations logged
           </div>
       </div>
@@ -83,17 +83,19 @@ export default function Login({ setUser }) {
         <div className="w-full max-w-md">
           
           <div className="text-center mb-10 lg:hidden">
-             <FlaskConical size={48} className="text-amber-cyan mx-auto mb-4" />
-             <h1 className="text-3xl font-bold text-amber-white tracking-[4px] font-mono mb-1">AMBER</h1>
-             <p className="text-[9px] text-amber-muted font-mono tracking-widest uppercase">AI-Driven Milk Bio-Purity Evaluation Resource</p>
+             <div className="w-16 h-16 bg-white border border-gray-200 flex items-center justify-center rounded-xl shadow-sm mx-auto mb-4">
+                <FlaskConical size={28} className="text-amber-cyan" />
+             </div>
+             <h1 className="text-3xl font-extrabold text-amber-primary tracking-wide mb-1">AMBER</h1>
+             <p className="text-[10px] text-gray-500 font-sans font-semibold tracking-widest uppercase">Milk Bio-Purity Evaluation</p>
           </div>
 
           <div className="mb-10 text-center lg:text-left">
-             <h2 className="text-3xl font-bold text-white tracking-tight mb-2">
+             <h2 className="text-3xl font-extrabold text-amber-primary tracking-tight mb-2">
                {isLogin ? 'Welcome back' : 'Create an account'}
              </h2>
-             <p className="text-amber-muted">
-               {isLogin ? 'Please enter your credentials to access your terminal.' : 'Register a new laboratory edge node.'}
+             <p className="text-gray-500 font-medium">
+               {isLogin ? 'Please enter your credentials to access your dashboard.' : 'Register a new laboratory edge node.'}
              </p>
           </div>
           
@@ -103,7 +105,7 @@ export default function Login({ setUser }) {
                 initial={{ opacity: 0, y: -10 }} 
                 animate={{ opacity: 1, y: 0 }} 
                 exit={{ opacity: 0, scale: 0.95 }}
-                className="bg-red-500/10 border border-red-500/50 text-red-500 p-4 rounded-xl mb-6 text-sm flex gap-3 shadow-lg"
+                className="bg-[#FDECEE] border border-[#EA5455]/50 text-amber-red p-4 rounded-xl mb-6 text-sm font-medium flex gap-3 shadow-sm"
               >
                 <Activity size={18} className="shrink-0 mt-0.5" />
                 <span>{error}</span>
@@ -113,9 +115,9 @@ export default function Login({ setUser }) {
           
           <form onSubmit={handleSubmit} className="flex flex-col gap-5">
             <div>
-               <label className="block font-mono text-xs text-amber-muted tracking-widest uppercase mb-2 ml-1">Username Identifier</label>
+               <label className="block font-sans font-bold text-xs text-gray-500 tracking-wider uppercase mb-2 ml-1">Username Identifier</label>
                <input 
-                 className="w-full bg-amber-surface border border-amber-border rounded-xl p-4 text-amber-white focus:border-amber-cyan focus:ring-1 focus:ring-amber-cyan transition-colors outline-none shadow-inner"
+                 className="w-full bg-gray-50 border border-gray-200 rounded-xl p-4 text-amber-primary focus:bg-white focus:border-amber-cyan focus:ring-2 focus:ring-amber-cyan/20 transition-all outline-none font-medium"
                  type="text" 
                  placeholder="e.g. lab_tech_01" 
                  value={username} 
@@ -132,9 +134,9 @@ export default function Login({ setUser }) {
                   exit={{ height: 0, opacity: 0 }} 
                   className="overflow-hidden"
                 >
-                  <label className="block font-mono text-xs text-amber-muted tracking-widest uppercase mb-2 ml-1 mt-2">Primary Email</label>
+                  <label className="block font-sans font-bold text-xs text-gray-500 tracking-wider uppercase mb-2 ml-1 mt-2">Primary Email</label>
                   <input 
-                    className="w-full bg-amber-surface border border-amber-border rounded-xl p-4 text-amber-white focus:border-amber-cyan focus:ring-1 focus:ring-amber-cyan transition-colors outline-none shadow-inner"
+                    className="w-full bg-gray-50 border border-gray-200 rounded-xl p-4 text-amber-primary focus:bg-white focus:border-amber-cyan focus:ring-2 focus:ring-amber-cyan/20 transition-all outline-none font-medium"
                     type="email" 
                     placeholder="email@laboratory.com" 
                     value={email} 
@@ -146,9 +148,9 @@ export default function Login({ setUser }) {
             </AnimatePresence>
 
             <div>
-               <label className="block font-mono text-xs text-amber-muted tracking-widest uppercase mb-2 ml-1 mt-2">Secure Passcode</label>
+               <label className="block font-sans font-bold text-xs text-gray-500 tracking-wider uppercase mb-2 ml-1 mt-2">Secure Passcode</label>
                <input 
-                 className="w-full bg-amber-surface border border-amber-border rounded-xl p-4 text-amber-white focus:border-amber-cyan focus:ring-1 focus:ring-amber-cyan transition-colors outline-none shadow-inner"
+                 className="w-full bg-gray-50 border border-gray-200 rounded-xl p-4 text-amber-primary focus:bg-white focus:border-amber-cyan focus:ring-2 focus:ring-amber-cyan/20 transition-all outline-none font-medium"
                  type="password" 
                  placeholder="••••••••" 
                  value={password} 
@@ -160,24 +162,24 @@ export default function Login({ setUser }) {
             <button 
               type="submit" 
               disabled={loading}
-              className={`w-full bg-amber-cyan hover:bg-amber-cyandim text-white font-mono font-bold tracking-widest rounded-xl px-5 py-4 mt-4 transition-all duration-200 outline-none flex justify-center items-center gap-3 shadow-[0_0_15px_rgba(96,165,250,0.3)] ${loading ? 'opacity-70 cursor-wait' : 'hover:-translate-y-0.5'}`}
+              className={`w-full bg-amber-cyan hover:opacity-90 text-white font-sans font-bold tracking-wide rounded-xl px-5 py-4 mt-4 transition-all duration-200 outline-none flex justify-center items-center gap-3 shadow-md hover:shadow-lg ${loading ? 'opacity-70 cursor-wait' : 'hover:-translate-y-0.5'}`}
             >
               {loading ? (
                  <span className="flex items-center gap-2"><Activity size={18} className="animate-spin" /> ESTABLISHING LINK...</span>
               ) : (
                  <>
                    {isLogin ? <LogIn size={18}/> : <UserPlus size={18}/>}
-                   {isLogin ? 'AUTHENTICATE SESSION' : 'REGISTER NODE'}
+                   {isLogin ? 'Authenticate Session' : 'Register Node'}
                  </>
               )}
             </button>
           </form>
           
-          <div className="mt-8 text-center text-sm font-sans text-amber-muted">
+          <div className="mt-8 text-center text-sm font-sans font-medium text-gray-500">
             {isLogin ? "Don't have a registered node? " : "Already established a node? "}
             <button 
               onClick={() => { setIsLogin(!isLogin); setError(null); }} 
-              className="text-amber-cyan hover:text-white font-medium transition-colors hover:underline"
+              className="text-amber-cyan hover:text-blue-600 font-bold transition-colors hover:underline"
             >
               {isLogin ? "Create an account" : "Sign in to terminal"}
             </button>
