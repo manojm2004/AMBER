@@ -1,5 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 export default {
+  darkMode: 'class',
   content: [
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
@@ -8,18 +9,17 @@ export default {
     extend: {
       colors: {
         amber: {
-          bg: '#F5F7FA',         // Clean Light Gray Background
-          surface: '#FFFFFF',    // Pure White Surface (Cards)
-          border: '#E0E6ED',     // Light border gray
-          primary: '#1F2A44',    // Dark Blue / Charcoal (Main Text)
-          muted: '#64748B',      // Muted Slate Text
-          cyan: '#3A7DFF',       // Soft Blue Accents (Actionable)
-          green: '#28C76F',      // Fresh Safe Green (Purity)
-          red: '#EA5455',        // Soft Alert Red (Adulteration)
+          bg: '#F5F7FA',
+          surface: '#FFFFFF',
+          border: '#E0E6ED',
+          primary: '#1F2A44',
+          muted: '#64748B',
+          cyan: '#3A7DFF',
+          green: '#28C76F',
+          red: '#EA5455',
         }
       },
       fontFamily: {
-        // OVERRIDE: We forcefully replace 'mono' spacing with clean, premium sans-serif typography to eliminate the "Hacker" vibe.
         mono: ['Inter', 'system-ui', 'sans-serif'],
         sans: ['Inter', 'system-ui', 'sans-serif'],
       }

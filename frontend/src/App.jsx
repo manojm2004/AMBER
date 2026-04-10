@@ -9,6 +9,7 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import Profile from './components/Profile';
 import { getUserMe } from './api';
+import { ThemeProvider } from './context/ThemeContext';
 import './index.css';
 
 function PrivateLayout({ children, user, setUser }) {
@@ -21,7 +22,7 @@ function PrivateLayout({ children, user, setUser }) {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-gray-50 text-amber-primary font-sans">
+    <div className="min-h-screen flex flex-col font-sans" style={{ backgroundColor: 'var(--bg-page)', color: 'var(--text-primary)' }}>
       <Header user={user} handleLogout={handleLogout} />
       
       <main className={`flex-1 w-full mx-auto flex flex-col ${isHome ? '' : 'max-w-7xl p-4 md:p-6 mt-4'}`}>
@@ -54,7 +55,12 @@ function App() {
   }, []);
 
   if (loading) {
-    return <div className="min-h-screen bg-white flex items-center justify-center font-sans font-bold text-gray-400 tracking-widest text-sm uppercase">Initializing Session...</div>;
+    return (
+      <div className="min-h-screen flex items-center justify-center font-sans font-semibold text-sm uppercase tracking-widest"
+           style={{ backgroundColor: 'var(--bg-page)', color: 'var(--text-muted)' }}>
+        Initializing Session...
+      </div>
+    );
   }
 
   return (
@@ -81,4 +87,10 @@ function App() {
   );
 }
 
-export default App;
+export default function Root() {
+  return (
+    <ThemeProvider>
+      <App />
+    </ThemeProvider>
+  );
+}
