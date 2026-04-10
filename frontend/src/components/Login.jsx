@@ -43,29 +43,29 @@ export default function Login({ setUser }) {
   };
 
   return (
-    <div className="flex w-full min-h-screen bg-white font-sans selection:bg-amber-cyan selection:text-white">
+    <div className="flex w-full min-h-screen font-sans" style={{ backgroundColor: 'var(--bg-page)' }}>
       
       {/* Left Pane - Branding & Visuals (Hidden on small screens) */}
-      <div className="hidden lg:flex lg:w-1/2 bg-gray-50 relative overflow-hidden flex-col justify-between p-12 border-r border-gray-200">
+      <div className="hidden lg:flex lg:w-1/2 relative overflow-hidden flex-col justify-between p-12" style={{ backgroundColor: 'var(--bg-secondary)', borderRight: '1px solid var(--border)' }}>
           {/* Animated Background Mesh */}
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(58,125,255,0.08)_0%,transparent_50%)]"></div>
           <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-400 rounded-full mix-blend-multiply filter blur-[150px] opacity-10 animate-pulse"></div>
 
           <div className="relative z-10 flex items-center gap-3">
-             <div className="w-12 h-12 bg-white border border-gray-200 flex items-center justify-center rounded-xl shadow-sm">
+             <div className="w-12 h-12 flex items-center justify-center rounded-xl shadow-sm" style={{ backgroundColor: 'var(--bg-card)', border: '1px solid var(--border)' }}>
                 <FlaskConical size={24} className="text-amber-cyan" />
              </div>
              <div>
-                <h1 className="text-2xl font-bold text-amber-primary tracking-wide font-sans leading-none">AMBER</h1>
-                <span className="text-[10px] text-gray-500 font-sans tracking-widest uppercase inline-block mt-1">Milk Bio-Purity Evaluation Center</span>
+                <h1 className="text-2xl font-bold tracking-wide font-sans leading-none" style={{ color: 'var(--text-primary)' }}>AMBER</h1>
+                <span className="text-[10px] font-sans tracking-widest uppercase inline-block mt-1" style={{ color: 'var(--text-muted)' }}>Milk Bio-Purity Evaluation Center</span>
              </div>
           </div>
 
           <div className="relative z-10 max-w-lg">
-             <h2 className="text-4xl xl:text-5xl font-extrabold text-amber-primary mb-6 leading-tight tracking-tight">
+             <h2 className="text-4xl xl:text-5xl font-extrabold mb-6 leading-tight tracking-tight" style={{ color: 'var(--text-primary)' }}>
                 Secure the Future of Dairy Analytics.
              </h2>
-             <p className="text-gray-600 text-lg font-medium leading-relaxed mb-8">
+             <p className="text-lg font-medium leading-relaxed mb-8" style={{ color: 'var(--text-secondary)' }}>
                 Connect your laboratory to the edge. Instantly process physical slide captures through a locally optimized Convolutional Neural Network.
              </p>
              <div className="flex items-center gap-3 text-amber-green font-sans font-bold text-sm tracking-wide border border-amber-green/30 px-4 py-2.5 rounded-lg max-w-max bg-amber-green/5 shadow-sm">
@@ -136,7 +136,8 @@ export default function Login({ setUser }) {
                 >
                   <label className="block font-sans font-bold text-xs text-gray-500 tracking-wider uppercase mb-2 ml-1 mt-2">Primary Email</label>
                   <input 
-                    className="w-full bg-gray-50 border border-gray-200 rounded-xl p-4 text-amber-primary focus:bg-white focus:border-amber-cyan focus:ring-2 focus:ring-amber-cyan/20 transition-all outline-none font-medium"
+                    className="w-full rounded-xl p-4 font-medium outline-none transition-all"
+                    style={{ backgroundColor: 'var(--bg-input)', border: '1px solid var(--border)', color: 'var(--text-primary)' }}
                     type="email" 
                     placeholder="email@laboratory.com" 
                     value={email} 
@@ -150,7 +151,8 @@ export default function Login({ setUser }) {
             <div>
                <label className="block font-sans font-bold text-xs text-gray-500 tracking-wider uppercase mb-2 ml-1 mt-2">Secure Passcode</label>
                <input 
-                 className="w-full bg-gray-50 border border-gray-200 rounded-xl p-4 text-amber-primary focus:bg-white focus:border-amber-cyan focus:ring-2 focus:ring-amber-cyan/20 transition-all outline-none font-medium"
+                 className="w-full rounded-xl p-4 font-medium outline-none transition-all"
+                 style={{ backgroundColor: 'var(--bg-input)', border: '1px solid var(--border)', color: 'var(--text-primary)' }}
                  type="password" 
                  placeholder="••••••••" 
                  value={password} 

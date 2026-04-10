@@ -55,17 +55,17 @@ export default function Dashboard() {
     window.open(url, '_blank', 'noopener,noreferrer');
   };
 
-  if (loading) return <div className="text-amber-cyan font-mono animate-pulse mt-10">EXTRACTING DATA...</div>;
+  if (loading) return <div className="font-sans font-semibold animate-pulse mt-10 text-center" style={{ color: 'var(--text-muted)' }}>Loading data...</div>;
 
   return (
     <div className="w-full relative">
       
       {/* HARDWARE VERIFICATION MODAL */}
       {selectedRecord && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-gray-900/40 backdrop-blur-[2px] animate-fade-in">
-          <div className="bg-white border border-gray-200 w-full max-w-2xl rounded-2xl shadow-xl flex flex-col overflow-hidden">
-            <div className="flex justify-between items-center p-4 border-b border-gray-100 bg-gray-50">
-              <h3 className="font-sans font-bold text-amber-primary text-sm tracking-wide flex items-center gap-2">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 backdrop-blur-[2px] animate-fade-in" style={{ backgroundColor: 'rgba(0,0,0,0.5)' }}>
+          <div className="w-full max-w-2xl rounded-2xl shadow-2xl flex flex-col overflow-hidden" style={{ backgroundColor: 'var(--bg-card)', border: '1px solid var(--border)' }}>
+            <div className="flex justify-between items-center p-4" style={{ borderBottom: '1px solid var(--border-light)', backgroundColor: 'var(--bg-secondary)' }}>
+              <h3 className="font-sans font-bold text-sm tracking-wide flex items-center gap-2" style={{ color: 'var(--text-primary)' }}>
                 <ImageIcon size={16}/> Record Inspection
               </h3>
               <button 
@@ -134,33 +134,25 @@ export default function Dashboard() {
 
       {/* 5-Column KPIs Matching app.py */}
       <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-8">
-        <div className="flex flex-col items-center justify-center p-5 bg-white border border-gray-200 rounded-2xl shadow-sm">
-          <div className="font-sans text-2xl text-blue-500 font-extrabold leading-none mb-2">{stats?.total || 0}</div>
-          <h3 className="font-sans text-[11px] font-bold text-gray-400 uppercase tracking-wider">Total Samples</h3>
-        </div>
-        <div className="flex flex-col items-center justify-center p-5 bg-white border border-gray-200 rounded-2xl shadow-sm">
-          <div className="font-sans text-2xl text-[#28C76F] font-extrabold leading-none mb-2">{stats?.breakdown?.Pure || 0}</div>
-          <h3 className="font-sans text-[11px] font-bold text-gray-400 uppercase tracking-wider">Pure Milk</h3>
-        </div>
-        <div className="flex flex-col items-center justify-center p-5 bg-white border border-gray-200 rounded-2xl shadow-sm">
-          <div className="font-sans text-2xl text-[#EA5455] font-extrabold leading-none mb-2">{stats?.breakdown?.Adulterated || 0}</div>
-          <h3 className="font-sans text-[11px] font-bold text-gray-400 uppercase tracking-wider">Adulterated</h3>
-        </div>
-        <div className="flex flex-col items-center justify-center p-5 bg-white border border-gray-200 rounded-2xl shadow-sm">
-          <div className="font-sans text-2xl text-gray-500 font-extrabold leading-none mb-2">{stats?.breakdown?.Glucose || 0}</div>
-          <h3 className="font-sans text-[11px] font-bold text-gray-400 uppercase tracking-wider">Glucose</h3>
-        </div>
-        <div className="flex flex-col items-center justify-center p-5 bg-white border border-gray-200 rounded-2xl shadow-sm">
-          <div className="font-sans text-2xl text-[#8B5CF6] font-extrabold leading-none mb-2">{stats?.breakdown?.Pathogens || 0}</div>
-          <h3 className="font-sans text-[11px] font-bold text-gray-400 uppercase tracking-wider">Pathogens</h3>
-        </div>
+        {[
+          { label: 'Total Samples', value: stats?.total || 0, color: '#3A7DFF' },
+          { label: 'Pure Milk',     value: stats?.breakdown?.Pure || 0, color: '#28C76F' },
+          { label: 'Adulterated',   value: stats?.breakdown?.Adulterated || 0, color: '#EA5455' },
+          { label: 'Glucose',       value: stats?.breakdown?.Glucose || 0, color: 'var(--text-secondary)' },
+          { label: 'Pathogens',     value: stats?.breakdown?.Pathogens || 0, color: '#8B5CF6' },
+        ].map(({ label, value, color }) => (
+          <div key={label} className="flex flex-col items-center justify-center p-5 rounded-2xl" style={{ backgroundColor: 'var(--bg-card)', border: '1px solid var(--border)', boxShadow: 'var(--shadow-card)' }}>
+            <div className="font-sans text-2xl font-extrabold leading-none mb-2" style={{ color }}>{value}</div>
+            <h3 className="font-sans text-[11px] font-bold uppercase tracking-wider" style={{ color: 'var(--text-muted)' }}>{label}</h3>
+          </div>
+        ))}
       </div>
 
       <div className="flex flex-col lg:flex-row gap-8">
         {/* Main Table Area */}
         <div className="w-full lg:w-2/3">
-          <div className="bg-white border border-gray-200 rounded-2xl shadow-sm h-full flex flex-col overflow-hidden">
-            <div className="flex justify-between items-center p-6 border-b border-gray-100 bg-gray-50">
+          <div className="rounded-2xl h-full flex flex-col overflow-hidden" style={{ backgroundColor: 'var(--bg-card)', border: '1px solid var(--border)', boxShadow: 'var(--shadow-card)' }}>
+            <div className="flex justify-between items-center p-6" style={{ borderBottom: '1px solid var(--border-light)', backgroundColor: 'var(--bg-secondary)' }}>
               <div className="flex flex-col">
                  <h2 className="font-sans font-bold text-lg text-amber-primary flex items-center gap-2">
                    <Clock size={18} className="text-blue-500" /> Recent Timeline
@@ -174,7 +166,7 @@ export default function Dashboard() {
 
             <div className="overflow-x-auto flex-1">
               <table className="w-full text-left font-sans text-sm">
-                <thead className="bg-white border-b border-gray-100 text-gray-500 uppercase text-[10px] font-bold tracking-wider">
+                <thead className="uppercase text-[10px] font-bold tracking-wider" style={{ backgroundColor: 'var(--bg-secondary)', borderBottom: '1px solid var(--border)', color: 'var(--text-muted)' }}>
                   <tr>
                     <th className="px-6 py-4">Timestamp</th>
                     <th className="px-6 py-4">Filename</th>
@@ -182,7 +174,7 @@ export default function Dashboard() {
                     <th className="px-6 py-4">Confidence</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-gray-100 text-amber-primary font-medium">
+                <tbody className="font-medium" style={{ color: 'var(--text-primary)', borderColor: 'var(--border-light)', divideColor: 'var(--border)' }}>
                   {history.length === 0 ? (
                     <tr>
                       <td colSpan="4" className="text-center py-12 text-gray-400">No records found in the archive.</td>
@@ -218,8 +210,8 @@ export default function Dashboard() {
 
         {/* Right Sidebar: Model Performance matching app.py */}
         <div className="w-full lg:w-1/3 flex flex-col gap-8">
-          <div className="bg-white border border-gray-200 rounded-2xl shadow-sm p-6">
-            <h2 className="font-sans font-bold text-lg text-amber-primary flex items-center gap-2 mb-6 pb-4 border-b border-gray-100">
+          <div className="rounded-2xl p-6" style={{ backgroundColor: 'var(--bg-card)', border: '1px solid var(--border)', boxShadow: 'var(--shadow-card)' }}>
+            <h2 className="font-sans font-bold text-lg flex items-center gap-2 mb-6 pb-4" style={{ color: 'var(--text-primary)', borderBottom: '1px solid var(--border-light)' }}>
               <Settings size={18} className="text-blue-500" /> Model Parameters
             </h2>
             <div className="flex flex-col gap-1">
@@ -246,7 +238,7 @@ export default function Dashboard() {
             </div>
           </div>
           
-          <div className="bg-gray-50 border border-gray-200 rounded-2xl p-6 text-center flex flex-col justify-center items-center">
+          <div className="rounded-2xl p-6 text-center flex flex-col justify-center items-center" style={{ backgroundColor: 'var(--bg-secondary)', border: '1px solid var(--border)' }}>
             <Activity size={28} className="text-blue-400 mb-3"/>
             <span className="font-sans font-bold text-[11px] text-gray-500 uppercase tracking-widest">Inference engine online</span>
           </div>

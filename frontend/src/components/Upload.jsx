@@ -44,7 +44,7 @@ export default function Upload() {
   };
 
   return (
-    <div className="bg-white border border-gray-200 w-full max-w-2xl mx-auto mt-6 p-8 rounded-2xl shadow-sm">
+    <div className="w-full max-w-2xl mx-auto mt-6 p-8 rounded-2xl" style={{ backgroundColor: 'var(--bg-card)', border: '1px solid var(--border)', boxShadow: 'var(--shadow-card)' }}>
       <h2 className="font-sans font-bold text-xl text-amber-primary flex items-center gap-3 border-b border-gray-100 pb-4">
         <div className="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center text-blue-500">
            <UploadCloud size={20} />
@@ -53,7 +53,11 @@ export default function Upload() {
       </h2>
       
       <div className="flex flex-col items-center gap-6 pt-6">
-        <label className="border-2 border-dashed border-gray-300 w-full h-56 flex flex-col items-center justify-center rounded-2xl cursor-pointer hover:bg-blue-50 hover:border-blue-400 transition-all bg-gray-50 group">
+        <label className="border-2 border-dashed w-full h-56 flex flex-col items-center justify-center rounded-2xl cursor-pointer transition-all group"
+          style={{ backgroundColor: 'var(--bg-secondary)', borderColor: 'var(--border)' }}
+          onMouseEnter={e => { e.currentTarget.style.borderColor = '#3A7DFF'; e.currentTarget.style.backgroundColor = 'rgba(58,125,255,0.05)'; }}
+          onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--border)'; e.currentTarget.style.backgroundColor = 'var(--bg-secondary)'; }}
+        >
           <UploadCloud size={48} className="text-gray-400 group-hover:text-blue-500 mb-4 transition-colors" />
           <span className="font-sans font-bold text-sm text-amber-primary">Click or drag image file here</span>
           <span className="font-sans font-medium text-xs text-gray-500 mt-2">Supports JPG, PNG, BMP</span>
@@ -61,8 +65,8 @@ export default function Upload() {
         </label>
 
         {preview && (
-          <div className="w-full flex flex-col sm:flex-row gap-6 mt-4 p-6 border border-gray-200 rounded-2xl bg-white shadow-sm">
-            <img src={preview} alt="Sample Preview" className="h-48 w-full sm:w-48 object-cover bg-gray-100 rounded-xl" />
+          <div className="w-full flex flex-col sm:flex-row gap-6 mt-4 p-6 rounded-2xl" style={{ border: '1px solid var(--border)', backgroundColor: 'var(--bg-card)', boxShadow: 'var(--shadow-card)' }}>
+            <img src={preview} alt="Sample Preview" className="h-48 w-full sm:w-48 object-cover rounded-xl" style={{ backgroundColor: 'var(--bg-secondary)' }} />
             
             <div className="flex-1 flex flex-col justify-between">
               <div>
@@ -90,7 +94,7 @@ export default function Upload() {
               )}
 
               {result && (
-                <div className="mt-4 flex flex-col items-center p-5 bg-gray-50 rounded-xl border border-gray-200">
+                <div className="mt-4 flex flex-col items-center p-5 rounded-xl" style={{ backgroundColor: 'var(--bg-secondary)', border: '1px solid var(--border)' }}>
                   <div className={`pred-badge ${badgeClass(result.prediction_label)} text-xl px-8 py-3 w-full justify-center shadow-sm`}>
                     {result.prediction_label}
                   </div>
